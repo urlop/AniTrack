@@ -11,13 +11,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.anitrack.ruby.anitrack.R;
+import com.anitrack.ruby.anitrack.network.models.DataAnime;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class JavaFragment extends Fragment {
 
-    List<String> list = new ArrayList();
     AnimeAdapter adapter;
     MainViewModel viewModel;
 
@@ -39,15 +39,21 @@ public class JavaFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         MainViewModel model = ViewModelProviders.of(this).get(MainViewModel.class);
 
-        model.getHeroes().observe(this, new Observer<List<RedditChildrenResponse>>() {
+        /*model.getHeroes().observe(this, new Observer<List<RedditChildrenResponse>>() {
             @Override
             public void onChanged(@Nullable List<RedditChildrenResponse> list) {
                 adapter = new AnimeAdapter((ArrayList<RedditChildrenResponse>) list, getContext());
                 //recyclerView.setAdapter(adapter);
             }
+        });*/
+
+        model.getAnimesTrending().observe(this, new Observer<List<DataAnime>>() {
+            @Override
+            public void onChanged(@Nullable List<DataAnime> list) {
+                adapter = new AnimeAdapter((ArrayList<DataAnime>) list, getContext());
+                //recyclerView.setAdapter(adapter);
+            }
         });
-
-
     }
 
 }

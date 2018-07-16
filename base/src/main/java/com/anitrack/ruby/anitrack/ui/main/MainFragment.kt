@@ -3,7 +3,6 @@ package com.anitrack.ruby.anitrack.ui.main
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.annotation.Nullable
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
@@ -11,13 +10,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.anitrack.ruby.anitrack.R
 import kotlinx.android.synthetic.main.main_fragment.*
-import com.anitrack.ruby.anitrack.MainActivity
-
+import com.anitrack.ruby.anitrack.network.models.DataAnime
 
 
 class MainFragment : Fragment() {
 
-    val list: ArrayList<String> = ArrayList()
     lateinit var adapter: AnimeAdapter
 
     companion object {
@@ -33,19 +30,15 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        adapter = AnimeAdapter(arrayListOf(), context!!)
+        rv_list.adapter = adapter
+        rv_list.layoutManager = LinearLayoutManager(context!!)
+
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
 
-        viewModel.getHeroes().observe(this, Observer { list ->
-            adapter = AnimeAdapter((list as java.util.ArrayList<RedditChildrenResponse>?)!!, context!!)
-            rv_list.adapter = adapter
-            rv_list.layoutManager = LinearLayoutManager(context!!)
+        viewModel.getAnimesTrending().observe(this, Observer { list ->
+            adapter.addList(list as ArrayList<DataAnime>, true)
         })
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        //list.add("Full Metal Alchemist")
-        //list.add("Full Metal Panic")
     }
 
     override fun onDestroyView() {

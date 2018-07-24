@@ -1,9 +1,9 @@
 package com.anitrack.ruby.anitrack.ui.main
 
-import android.arch.lifecycle.ViewModel
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.LiveData
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.anitrack.ruby.anitrack.network.RetrofitClient
 import com.anitrack.ruby.anitrack.network.models.BaseAnime
 import com.anitrack.ruby.anitrack.network.models.DataAnime

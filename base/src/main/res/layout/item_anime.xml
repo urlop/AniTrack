@@ -1,20 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="@dimen/space_5"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_height="200dp">
+
+    <ImageView
+        android:id="@+id/iv_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:src="@android:drawable/btn_star_big_on" />
 
     <TextView
         android:id="@+id/tv_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:background="@drawable/bg_gradient_blue"
+        android:padding="@dimen/space_5"
+        android:textColor="@color/white"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Anime Name"/>
+        app:layout_constraintTop_toTopOf="@+id/iv_background"
+        tools:text="Anime Name" />
 
-</android.support.constraint.ConstraintLayout>
+
+    <View
+        android:id="@+id/v_bottom_container"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/list_all_height_bottom_bar"
+        android:background="@color/colorPrimaryTransparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_add"
+        android:layout_width="@dimen/size_normal"
+        android:layout_height="@dimen/size_normal"
+        android:layout_margin="@dimen/space_10"
+        android:src="@drawable/ic_add_white"
+        app:layout_constraintBottom_toBottomOf="@id/v_bottom_container"
+        app:layout_constraintStart_toStartOf="@id/v_bottom_container"
+        app:layout_constraintTop_toTopOf="@+id/v_bottom_container" />
+
+    <ImageView
+        android:id="@+id/iv_more"
+        android:layout_width="@dimen/size_normal"
+        android:layout_height="@dimen/size_normal"
+        android:layout_margin="@dimen/space_10"
+        android:src="@drawable/ic_more_horiz_white"
+        app:layout_constraintBottom_toBottomOf="@id/v_bottom_container"
+        app:layout_constraintEnd_toEndOf="@id/v_bottom_container"
+        app:layout_constraintTop_toTopOf="@+id/v_bottom_container" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

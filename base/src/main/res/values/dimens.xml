@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="space_5">5dp</dimen>
+    <dimen name="space_10">10dp</dimen>
+
+    <dimen name="size_normal">48dp</dimen>
+    <dimen name="size_small">24dp</dimen>
+
+    <!-- List All -->
+    <dimen name="list_all_height_bottom_bar">68dp</dimen>
+</resources>

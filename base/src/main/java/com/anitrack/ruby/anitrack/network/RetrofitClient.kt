@@ -37,10 +37,6 @@ class RetrofitClient {
         api = retrofit.create(Api::class.java)
     }
 
-    fun getNews(after: String, limit: String): Call<RedditNewsResponse> {
-        return api.getTop(after, limit)
-    }
-
     fun getAnimesTrending(): Call<BaseAnime> {
         return api.getAnimesTrending()
     }

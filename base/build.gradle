@@ -1,13 +1,15 @@
 apply plugin: 'com.android.feature'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
+    buildToolsVersion "28.0.1"
     baseFeature true
     defaultConfig {
         minSdkVersion 19
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.0"
     }
@@ -20,13 +22,31 @@ android {
 }
 
 dependencies {
-    api 'com.android.support:appcompat-v7:27.1.1'
-    api 'com.android.support.constraint:constraint-layout:1.1.2'
-    api 'android.arch.lifecycle:extensions:1.1.1'
-    application project(':app')
-    feature project(':allanime')
+    api 'androidx.appcompat:appcompat:1.0.0-beta01'
+    //implementation("androidx.legacy:legacy-support-core-ui:1.0.0-alpha1")
+    //implementation("androidx.annotation:annotation:1.0.0-alpha1")
+
+    //api 'com.android.support:appcompat-v7:27.1.1'   //
+    //api 'com.android.support.constraint:constraint-layout:1.1.2'    //
+    //api 'android.arch.lifecycle:extensions:1.1.1'
+
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
+    //implementation 'com.android.support:recyclerview-v7:27.1.1'   //
+    //implementation 'com.android.support:cardview-v7:27.1.1'   //
+
+    implementation 'androidx.arch.core:core-common:2.0.0-beta01'
+    implementation 'androidx.core:core-ktx:1.0.0-beta01'
+    //implementation 'androidx.appcompat:appcompat:1.0.0-beta01'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0-beta01'
+    api 'androidx.constraintlayout:constraintlayout:1.1.2'
+    implementation 'androidx.cardview:cardview:1.0.0-beta01'
+
+    implementation "androidx.room:room-runtime:2.0.0-beta01"
+    annotationProcessor "androidx.room:room-compiler:2.0.0-beta01"
+    kapt 'androidx.room:room-compiler:2.0.0-beta01'
+
+    implementation 'androidx.paging:paging-common:2.0.0-beta01'
+    implementation 'androidx.paging:paging-runtime:2.0.0-beta01'
 
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
@@ -34,6 +54,9 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:3.10.0")
     implementation 'com.squareup.okhttp3:logging-interceptor:3.10.0'
 
-    implementation "android.arch.lifecycle:extensions:1.1.1"
+    api 'androidx.lifecycle:lifecycle-extensions:2.0.0-beta01'
     implementation "android.arch.lifecycle:viewmodel:1.1.1"
+
+    application project(':app')
+    feature project(':allanime')
 }

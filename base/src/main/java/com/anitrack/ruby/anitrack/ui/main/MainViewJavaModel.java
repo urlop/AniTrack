@@ -1,13 +1,10 @@
 package com.anitrack.ruby.anitrack.ui.main;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
-import android.arch.lifecycle.ViewModel;
-
-import com.anitrack.ruby.anitrack.network.RetrofitClient;
-
 import java.util.List;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.ViewModel;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,7 +21,7 @@ public class MainViewJavaModel extends ViewModel {
             //heroList = MutableLiveData()
             reddit = new MutableLiveData<>();
             //we will load it asynchronously from server in this method
-            loadHeroes();
+            //loadHeroes();
         }
 
         //finally we will return the list
@@ -33,7 +30,7 @@ public class MainViewJavaModel extends ViewModel {
 
 
     //This method is using Retrofit to get the JSON data from URL
-    private void loadHeroes() {
+    /*private void loadHeroes() {
         new RetrofitClient().getNews("test", "10")
                 .enqueue(new Callback<RedditNewsResponse>() {
                     @Override
@@ -48,6 +45,6 @@ public class MainViewJavaModel extends ViewModel {
                         //TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                     }
                 });
-    }
+    }*/
 
 }

@@ -1,62 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="@dimen/space_5"
     android:layout_width="match_parent"
-    android:layout_height="200dp">
+    android:layout_height="@dimen/list_all_height_list_item"
+    android:layout_margin="@dimen/space_5"
+    android:clickable="true"
+    android:focusable="true"
+    android:foreground="?selectableItemBackground"
+    app:cardElevation="2dp"
+    card_view:cardCornerRadius="4dp">
 
-    <ImageView
-        android:id="@+id/iv_background"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:src="@android:drawable/btn_star_big_on" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_gradient_blue"
-        android:padding="@dimen/space_5"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/iv_background"
-        tools:text="Anime Name" />
+        <ImageView
+            android:id="@+id/iv_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@android:drawable/btn_star_big_on" />
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_gradient_blue"
+            android:paddingStart="@dimen/space_5"
+            android:paddingTop="@dimen/space_5"
+            android:paddingEnd="@dimen/space_5"
+            android:paddingBottom="@dimen/space_15"
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/iv_background"
+            tools:text="Anime Name" />
 
 
-    <View
-        android:id="@+id/v_bottom_container"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/list_all_height_bottom_bar"
-        android:background="@color/colorPrimaryTransparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        <View
+            android:id="@+id/v_bottom_container"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/list_all_height_bottom_bar"
+            android:background="@color/colorPrimaryTransparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-    <ImageView
-        android:id="@+id/iv_add"
-        android:layout_width="@dimen/size_normal"
-        android:layout_height="@dimen/size_normal"
-        android:layout_margin="@dimen/space_10"
-        android:src="@drawable/ic_add_white"
-        app:layout_constraintBottom_toBottomOf="@id/v_bottom_container"
-        app:layout_constraintStart_toStartOf="@id/v_bottom_container"
-        app:layout_constraintTop_toTopOf="@+id/v_bottom_container" />
+        <ImageView
+            android:id="@+id/iv_add"
+            android:layout_width="@dimen/size_normal"
+            android:layout_height="@dimen/size_normal"
+            android:layout_margin="@dimen/space_10"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_add_white"
+            app:layout_constraintBottom_toBottomOf="@id/v_bottom_container"
+            app:layout_constraintStart_toStartOf="@id/v_bottom_container"
+            app:layout_constraintTop_toTopOf="@+id/v_bottom_container" />
 
-    <ImageView
-        android:id="@+id/iv_more"
-        android:layout_width="@dimen/size_normal"
-        android:layout_height="@dimen/size_normal"
-        android:layout_margin="@dimen/space_10"
-        android:src="@drawable/ic_more_horiz_white"
-        app:layout_constraintBottom_toBottomOf="@id/v_bottom_container"
-        app:layout_constraintEnd_toEndOf="@id/v_bottom_container"
-        app:layout_constraintTop_toTopOf="@+id/v_bottom_container" />
+        <ImageView
+            android:id="@+id/iv_more"
+            android:layout_width="@dimen/size_normal"
+            android:layout_height="@dimen/size_normal"
+            android:layout_margin="@dimen/space_10"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:focusable="true"
+            android:src="@drawable/ic_more_horiz_white"
+            app:layout_constraintBottom_toBottomOf="@id/v_bottom_container"
+            app:layout_constraintStart_toEndOf="@+id/iv_add"
+            app:layout_constraintTop_toTopOf="@+id/v_bottom_container" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:id="@+id/tv_rating"
+            android:layout_width="@dimen/list_all_size_rating"
+            android:layout_height="@dimen/list_all_size_rating"
+            android:layout_marginEnd="@dimen/space_10"
+            android:background="@drawable/bg_circle_purple"
+            android:gravity="center"
+            android:paddingBottom="3sp"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            app:layout_constraintBottom_toTopOf="@+id/v_bottom_container"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/v_bottom_container"
+            tools:text="4.4" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

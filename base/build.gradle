@@ -57,6 +57,8 @@ dependencies {
     api 'androidx.lifecycle:lifecycle-extensions:2.0.0-beta01'
     implementation "android.arch.lifecycle:viewmodel:1.1.1"
 
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
     application project(':app')
     feature project(':allanime')
 }

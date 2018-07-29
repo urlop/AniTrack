@@ -14,7 +14,8 @@ import retrofit2.Response
 
 class MainViewModel : ViewModel() {
     //this is the data that we will fetch asynchronously
-    private var animeList: MutableLiveData<List<DataAnime>>? = null
+    var animeList: MutableLiveData<List<DataAnime>>? = null
+    var error: MutableLiveData<Boolean>? = null;
 
     fun getAnimesTrending(): LiveData<List<DataAnime>> {
         //if the list is null
@@ -37,6 +38,7 @@ class MainViewModel : ViewModel() {
 
                     override fun onFailure(call: Call<BaseAnime>, t: Throwable) {
                         Log.d("MainViewModel", t.message);
+                        error?.value = true;
                     }
                 })
     }

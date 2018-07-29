@@ -6,6 +6,7 @@ import kotlinx.android.synthetic.main.item_anime.view.*
 
 
 class AnimeViewHolder (view: View) : RecyclerView.ViewHolder(view) {
-    // Holds the TextView that will add each animal to
-    val tvName = view.tv_name
+    val tv_name = view.tv_name
+    val iv_background = view.iv_background
+    val tv_rating = view.tv_rating
 }

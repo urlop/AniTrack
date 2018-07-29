@@ -6,7 +6,4 @@
         android:endColor="@color/colorPrimary"
         android:startColor="@android:color/transparent"
         android:type="linear" />
-    <size
-        android:width="60dp"
-        android:height="40dp" />
 </shape>

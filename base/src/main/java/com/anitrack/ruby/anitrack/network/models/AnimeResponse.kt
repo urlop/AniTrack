@@ -8,7 +8,7 @@ data class AnimeProductions(val links: Links?)
 
 data class AnimeStaff(val links: Links?)
 
-data class Attributes(val createdAt: String?, val updatedAt: String?, val slug: String?, val synopsis: String?, val coverImageTopOffset: Number?, val titles: Titles?, val canonicalTitle: String?, val abbreviatedTitles: List<String>?, val averageRating: String?, val ratingFrequencies: RatingFrequencies?, val userCount: Number?, val favoritesCount: Number?, val startDate: String?, val endDate: String?, val popularityRank: Number?, val ratingRank: Number?, val ageRating: String?, val ageRatingGuide: String?, val subtype: String?, val status: String?, val tba: String?, val posterImage: PosterImage?, val coverImage: CoverImage?, val episodeCount: Number?, val episodeLength: Number?, val youtubeVideoId: String?, val showType: String?, val nsfw: Boolean?)
+data class Attributes(val createdAt: String?, val updatedAt: String?, val slug: String?, val synopsis: String?, val coverImageTopOffset: Number?, val titles: Titles?, val canonicalTitle: String?, val abbreviatedTitles: List<String>?, val averageRating: String, val ratingFrequencies: RatingFrequencies?, val userCount: Number?, val favoritesCount: Number?, val startDate: String?, val endDate: String?, val popularityRank: Number?, val ratingRank: Number?, val ageRating: String?, val ageRatingGuide: String?, val subtype: String?, val status: String?, val tba: String?, val posterImage: PosterImage?, val coverImage: CoverImage?, val episodeCount: Number?, val episodeLength: Number?, val youtubeVideoId: String?, val showType: String?, val nsfw: Boolean?)
 
 data class BaseAnime(val data: List<DataAnime>?)
 
@@ -18,7 +18,7 @@ data class Categories(val links: Links?)
 
 data class CoverImage(val tiny: String?, val small: String?, val large: String?, val original: String?, val meta: Meta?)
 
-data class DataAnime(val id: String?, val type: String?, val links: Links?, val attributes: Attributes?, val relationships: Relationships?)
+data class DataAnime(val id: String?, val type: String?, val links: Links?, val attributes: Attributes, val relationships: Relationships?)
 
 data class Dimensions(val tiny: Tiny?, val small: Small?, val medium: Medium?, val large: Large?)
 

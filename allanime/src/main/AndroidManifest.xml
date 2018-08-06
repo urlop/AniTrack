@@ -3,13 +3,22 @@
     package="com.anitrack.ruby.anitrack.allanime">
 
     <application>
-        <activity android:name="com.anitrack.ruby.anitrack.MainActivity">
-            <intent-filter>
+        <!--activity android:name=".ui.all.AllActivity">
+            <intent-filter android:order="1">
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
+
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+
+                <data
+                    android:host="ruby.anitrack.com"
+                    android:pathPattern="/.search*"
+                    android:scheme="https" />
             </intent-filter>
-        </activity>
+        </activity-->
     </application>
 
 </manifest>

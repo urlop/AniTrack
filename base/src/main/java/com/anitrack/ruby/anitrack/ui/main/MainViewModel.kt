@@ -1,23 +1,58 @@
 package com.anitrack.ruby.anitrack.ui.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.anitrack.ruby.anitrack.network.RetrofitClient
-import com.anitrack.ruby.anitrack.network.models.BaseAnime
+import com.anitrack.ruby.anitrack.data.KitsuRepository
+import com.anitrack.ruby.anitrack.model.AnimeSearchResult
 import com.anitrack.ruby.anitrack.network.models.DataAnime
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
-class MainViewModel : ViewModel() {
+class MainViewModel() : ViewModel() {
+
+    companion object {
+        private const val VISIBLE_THRESHOLD = 5
+    }
+
     //this is the data that we will fetch asynchronously
-    var animeList: MutableLiveData<List<DataAnime>>? = null
-    var error: MutableLiveData<Boolean>? = null;
+    //private val animeList: MutableLiveData<List<DataAnime>>? = null
+   // var error: MutableLiveData<Boolean>? = null;
+    lateinit var repository: KitsuRepository
 
-    fun getAnimesTrending(): LiveData<List<DataAnime>> {
+    private val queryLiveData = MutableLiveData<String>()
+    private val animeResult: LiveData<AnimeSearchResult> = Transformations.map(queryLiveData, {
+        repository.search(it)
+    })
+
+    val result: LiveData<List<DataAnime>> = Transformations.switchMap(animeResult,
+            { it -> it.data })
+    val networkErrors: LiveData<String> = Transformations.switchMap(animeResult,
+            { it -> it.networkErrors })
+
+    /**
+     * Search a repository based on a query string.
+     */
+    fun searchRepo(queryString: String) {
+        queryLiveData.postValue(queryString)
+    }
+
+    fun listScrolled(visibleItemCount: Int, lastVisibleItemPosition: Int, totalItemCount: Int) {
+        if (visibleItemCount + lastVisibleItemPosition + VISIBLE_THRESHOLD >= totalItemCount) {
+            val immutableQuery = lastQueryValue()
+            if (immutableQuery != null) {
+                repository.requestMore(immutableQuery)
+            }
+        }
+    }
+
+    /**
+     * Get the last query value.
+     */
+    fun lastQueryValue(): String? = queryLiveData.value
+
+
+    /*fun getAnimesTrending(): LiveData<List<DataAnime>> {
         //if the list is null
         if (animeList == null) {
             animeList = MutableLiveData()
@@ -41,6 +76,6 @@ class MainViewModel : ViewModel() {
                         error?.value = true;
                     }
                 })
-    }
+    }*/
 
 }

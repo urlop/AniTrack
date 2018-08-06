@@ -38,7 +38,7 @@ public class JavaFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        MainViewModel model = ViewModelProviders.of(this).get(MainViewModel.class);
+        //MainViewModel model = ViewModelProviders.of(this).get(MainViewModel.class);
 
         /*model.getHeroes().observe(this, new Observer<List<RedditChildrenResponse>>() {
             @Override
@@ -48,13 +48,13 @@ public class JavaFragment extends Fragment {
             }
         });*/
 
-        model.getAnimesTrending().observe(this, new Observer<List<DataAnime>>() {
+        /*model.getResult().observe(this, new Observer<List<DataAnime>>() {
             @Override
             public void onChanged(@Nullable List<DataAnime> list) {
                 adapter = new AnimeAdapter((ArrayList<DataAnime>) list, getContext());
                 //recyclerView.setAdapter(adapter);
             }
-        });
+        });*/
     }
 
 }

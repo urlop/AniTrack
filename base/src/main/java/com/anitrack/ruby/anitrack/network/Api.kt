@@ -10,5 +10,11 @@ interface Api {
 
     @GET("trending/anime.json")
     fun getAnimesTrending()
-            : Call<BaseAnime>;
+            : Call<BaseAnime>
+
+    @GET("anime")
+    fun getAnimes(@Query("page[limit]") pageLimit: Number,
+                  @Query("page[offset]") pageOffset: Number,
+                  @Query("sort") sort: String)
+            : Call<BaseAnime>
 }

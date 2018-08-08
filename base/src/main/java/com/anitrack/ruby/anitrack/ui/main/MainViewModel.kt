@@ -12,7 +12,7 @@ import com.anitrack.ruby.anitrack.network.models.DataAnime
 class MainViewModel() : ViewModel() {
 
     companion object {
-        private const val VISIBLE_THRESHOLD = 5
+        private const val VISIBLE_THRESHOLD = 5 //5
     }
 
     //this is the data that we will fetch asynchronously
@@ -33,8 +33,10 @@ class MainViewModel() : ViewModel() {
     /**
      * Search a repository based on a query string.
      */
-    fun searchRepo(queryString: String) {
-        queryLiveData.postValue(queryString)
+    fun searchAnime(sort: String, reverseSort: Boolean) {
+        var finalSortQuery = sort
+        if (reverseSort) finalSortQuery = reverseSortString2(finalSortQuery)
+        queryLiveData.postValue(finalSortQuery)
     }
 
     fun listScrolled(visibleItemCount: Int, lastVisibleItemPosition: Int, totalItemCount: Int) {
@@ -50,6 +52,14 @@ class MainViewModel() : ViewModel() {
      * Get the last query value.
      */
     fun lastQueryValue(): String? = queryLiveData.value
+
+    fun reverseSortString(sort: String) : String {
+        var result = sort
+        if (sort[0] == '-') result = sort.drop(1) else result = "-$sort"
+        return result
+    }
+
+    fun reverseSortString2(sort: String) : String = if (sort[0] == '-') sort.drop(1) else "-$sort"
 
 
     /*fun getAnimesTrending(): LiveData<List<DataAnime>> {

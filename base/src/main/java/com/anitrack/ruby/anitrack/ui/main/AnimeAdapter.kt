@@ -15,9 +15,12 @@ class AnimeAdapter(val items: ArrayList<DataAnime>, val context: Context) : Recy
     }
 
     override fun onBindViewHolder(holder: AnimeViewHolder, position: Int) {
-        val averageStar = items.get(position).attributes.averageRating.toFloat() * 5 / 100 //100 points to 5 stars
+        val averageRating = items.get(position).attributes.averageRating ?: "0"
+        val averageStar = averageRating.toFloat() * 5 / 100 //100 points to 5 stars
 
-        holder.tv_name?.text = items.get(position).attributes.titles?.english
+        // TODO get by titles order and check for blanks {if (english.isNullOrBlank()) english else null}
+        // items.get(position).attributes.titles?.english ?: items.get(position).attributes.titles?.englishUniteStates ?: items.get(position).attributes.titles?.englishJapan ?: items.get(position).attributes.titles?.japanesseJapan ?: items.get(position).attributes.canonicalTitle
+        holder.tv_name?.text = items.get(position).attributes.canonicalTitle
         holder.tv_rating?.text = ViewUtils.asRoundedDecimal(averageStar, 1)
         Picasso.get().load(items.get(position).attributes.posterImage?.small).into(holder.iv_background)
     }

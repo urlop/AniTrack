@@ -40,4 +40,8 @@ class RetrofitClient {
     fun getAnimesTrending(): Call<BaseAnime> {
         return api.getAnimesTrending()
     }
+
+    fun getAnimes(pageLimit: Number, pageOffset: Number, sort: String): Call<BaseAnime> {
+        return api.getAnimes(pageLimit, pageOffset, sort)
+    }
 }

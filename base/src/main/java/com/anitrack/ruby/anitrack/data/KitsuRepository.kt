@@ -15,8 +15,14 @@ import retrofit2.Response
  */
 class KitsuRepository(private val service: RetrofitClient) {
 
+    companion object {
+        const val SORT_POPULARITY = "ratingRank"
+
+        private const val NETWORK_PAGE_SIZE = 10
+    }
+
     // keep the last requested page. When the request is successful, increment the page number.
-    private var lastRequestedPage = 1
+    private var lastPageOffset = 1
 
     // LiveData of network errors.
     private val networkErrors = MutableLiveData<String>()
@@ -27,31 +33,35 @@ class KitsuRepository(private val service: RetrofitClient) {
     var animeList: MutableLiveData<List<DataAnime>> = MutableLiveData()
 
     /**
-     * Search repositories whose names match the query.
+     * Search repositories whose names match the sort.
      */
-    fun search(query: String): AnimeSearchResult {
-        Log.d("GithubRepository", "New query: $query")
-        lastRequestedPage = 1
+    fun search(sort: String): AnimeSearchResult {
+        Log.d("GithubRepository", "New sort: $sort")
+        lastPageOffset = 0
 
-        requestAnimeList(query)
+        requestAnimeList(NETWORK_PAGE_SIZE, lastPageOffset, sort)
 
         return AnimeSearchResult(animeList, networkErrors)
     }
 
-    fun requestMore(query: String) {
-        requestAnimeList(query)
+    fun requestMore(sort: String) {
+        requestAnimeList(NETWORK_PAGE_SIZE, lastPageOffset, sort)
     }
 
-    private fun requestAnimeList(query: String) {
+    private fun requestAnimeList(pageLimit: Number, pageOffset: Number, sort: String) {
         if (isRequestInProgress) return
         isRequestInProgress = true
 
-        service.getAnimesTrending()
+        service.getAnimes(pageLimit, pageOffset, sort)
                 .enqueue(object : Callback<BaseAnime> {
                     override fun onResponse(call: Call<BaseAnime>, response: Response<BaseAnime>) {
-                        lastRequestedPage++
+                        lastPageOffset += NETWORK_PAGE_SIZE
                         isRequestInProgress = false
-                        animeList?.postValue(response.body()!!.data)
+                        if (animeList.value != null && animeList.value!!.isNotEmpty()) {
+                            animeList.postValue((animeList.value!!.toTypedArray() + response.body()!!.data!!.toTypedArray()).toList())
+                        } else {
+                            animeList.postValue(response.body()!!.data)
+                        }
                     }
 
                     override fun onFailure(call: Call<BaseAnime>, t: Throwable) {
@@ -61,7 +71,4 @@ class KitsuRepository(private val service: RetrofitClient) {
                 })
     }
 
-    companion object {
-        private const val NETWORK_PAGE_SIZE = 50
-    }
 }

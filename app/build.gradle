@@ -26,6 +26,10 @@ android {
 
 }
 
+androidExtensions {
+    experimental = true
+}
+
 dependencies {
     implementation project(':allanime')
     implementation project(':base')

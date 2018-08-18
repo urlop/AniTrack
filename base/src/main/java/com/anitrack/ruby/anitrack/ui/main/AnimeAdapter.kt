@@ -19,7 +19,7 @@ class AnimeAdapter(val items: ArrayList<DataAnime>, val context: Context) : Recy
     }
 
     override fun onBindViewHolder(holder: AnimeViewHolder, position: Int) {
-        //TODO Animate corretly while appearing
+        //TODO Animate correctly while appearing
 
         val averageRating = items.get(position).attributes.averageRating ?: "0"
         val averageStar = averageRating.toFloat() * 5 / 100 //100 points to 5 stars
@@ -48,7 +48,6 @@ class AnimeAdapter(val items: ArrayList<DataAnime>, val context: Context) : Recy
         if (reset) clear()
         items.addAll(data)
         notifyDataSetChanged()
-        Log.d("Log", "AnimeAdapter addList()");
     }
 
     fun clear() {

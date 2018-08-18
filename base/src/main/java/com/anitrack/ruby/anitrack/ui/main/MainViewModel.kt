@@ -39,7 +39,6 @@ class MainViewModel() : ViewModel() {
         if (reverseSort) finalSortQuery = reverseSortString(finalSortQuery)
         if (queryLiveData.value == finalSortQuery) return
         queryLiveData.postValue(finalSortQuery)
-        Log.d("Log", "MainViewModel searchAnime()");
     }
 
     fun listScrolled(visibleItemCount: Int, lastVisibleItemPosition: Int, totalItemCount: Int) {

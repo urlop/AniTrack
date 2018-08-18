@@ -21,13 +21,21 @@ import com.anitrack.ruby.anitrack.network.models.DataAnime
 
 class MainFragment : Fragment() {
 
-    lateinit var adapter: AnimeAdapter
-
     companion object {
         fun newInstance() = MainFragment()
     }
 
+    lateinit var adapter: AnimeAdapter
     private lateinit var viewModel: MainViewModel
+    private lateinit var observerResult: Observer<List<DataAnime>>
+    private lateinit var observerNetworkErros: Observer<String>
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel = ViewModelProviders.of(this)
+                .get(MainViewModel::class.java)
+        viewModel.repository = KitsuRepository(RetrofitClient())
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -36,9 +44,6 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        Log.d("Log", "MainFragment onActivityCreated()");
-        //TODO On back tries to crete a new fragment after entering detail and pressing back
-
         //List setup
         adapter = AnimeAdapter(arrayListOf(), context!!)
         rv_list.adapter = adapter
@@ -56,22 +61,24 @@ class MainFragment : Fragment() {
             }
         })
 
-        //ViewModle setup
-        viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
-        viewModel.repository = KitsuRepository(RetrofitClient())
         viewModel.searchAnime(KitsuRepository.SORT_POPULARITY, false);
 
-        viewModel.result.observe(this, Observer { list ->
+        observerResult = Observer { list ->
             adapter.addList(list as ArrayList<DataAnime>, true)
-        })
-        viewModel.networkErrors.observe(this, Observer<String> {
+        }
+        observerNetworkErros = Observer<String> {
             Toast.makeText(context, "\uD83D\uDE28 Wooops ${it}", Toast.LENGTH_LONG).show()
-        })
+        }
+
+        viewModel.result.observe(this, observerResult)
+        viewModel.networkErrors.observe(this, observerNetworkErros)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         adapter.clear()
+        viewModel.result.removeObserver(observerResult)
+        viewModel.networkErrors.removeObserver(observerNetworkErros)
     }
 
 }

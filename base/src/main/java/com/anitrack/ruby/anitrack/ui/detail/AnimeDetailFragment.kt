@@ -9,6 +9,8 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.anitrack.ruby.anitrack.R
+import com.anitrack.ruby.anitrack.network.models.DataAnime
+import kotlinx.android.synthetic.main.fragment_anime_detail.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -44,19 +46,26 @@ class AnimeDetailFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_anime_detail, container, false)
     }
 
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+        val anime: DataAnime = arguments!!.getParcelable<DataAnime>("ARG_ANIME")
+        tv_name.text = anime.attributes.canonicalTitle
+    }
+
     // TODO: Rename method, update argument and hook method into UI event
     fun onButtonPressed(uri: Uri) {
         listener?.onFragmentInteraction(uri)
     }
 
-    override fun onAttach(context: Context) {
+    /*override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
             listener = context
         } else {
             throw RuntimeException(context.toString() + " must implement OnFragmentInteractionListener")
         }
-    }
+    }*/
 
     override fun onDetach() {
         super.onDetach()

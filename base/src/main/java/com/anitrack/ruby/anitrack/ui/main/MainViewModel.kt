@@ -1,5 +1,6 @@
 package com.anitrack.ruby.anitrack.ui.main
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -17,7 +18,7 @@ class MainViewModel() : ViewModel() {
 
     //this is the data that we will fetch asynchronously
     //private val animeList: MutableLiveData<List<DataAnime>>? = null
-   // var error: MutableLiveData<Boolean>? = null;
+    // var error: MutableLiveData<Boolean>? = null;
     lateinit var repository: KitsuRepository
 
     private val queryLiveData = MutableLiveData<String>()
@@ -35,8 +36,10 @@ class MainViewModel() : ViewModel() {
      */
     fun searchAnime(sort: String, reverseSort: Boolean) {
         var finalSortQuery = sort
-        if (reverseSort) finalSortQuery = reverseSortString2(finalSortQuery)
+        if (reverseSort) finalSortQuery = reverseSortString(finalSortQuery)
+        if (queryLiveData.value == finalSortQuery) return
         queryLiveData.postValue(finalSortQuery)
+        Log.d("Log", "MainViewModel searchAnime()");
     }
 
     fun listScrolled(visibleItemCount: Int, lastVisibleItemPosition: Int, totalItemCount: Int) {
@@ -53,13 +56,7 @@ class MainViewModel() : ViewModel() {
      */
     fun lastQueryValue(): String? = queryLiveData.value
 
-    fun reverseSortString(sort: String) : String {
-        var result = sort
-        if (sort[0] == '-') result = sort.drop(1) else result = "-$sort"
-        return result
-    }
-
-    fun reverseSortString2(sort: String) : String = if (sort[0] == '-') sort.drop(1) else "-$sort"
+    fun reverseSortString(sort: String): String = if (sort[0] == '-') sort.drop(1) else "-$sort"
 
 
     /*fun getAnimesTrending(): LiveData<List<DataAnime>> {

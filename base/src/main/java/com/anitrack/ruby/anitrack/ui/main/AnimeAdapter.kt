@@ -1,8 +1,12 @@
 package com.anitrack.ruby.anitrack.ui.main
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.anitrack.ruby.anitrack.R
 import com.anitrack.ruby.anitrack.network.models.DataAnime
@@ -25,6 +29,15 @@ class AnimeAdapter(val items: ArrayList<DataAnime>, val context: Context) : Recy
         holder.tv_name?.text = items.get(position).attributes.canonicalTitle
         holder.tv_rating?.text = ViewUtils.asRoundedDecimal(averageStar, 1)
         Picasso.get().load(items.get(position).attributes.posterImage?.small).into(holder.iv_background)
+
+        holder.itemView.setOnClickListener{
+            val bundle = bundleOf("ARG_ANIME" to items.get(position))
+
+            //TODO Fix back removes first element randomly
+            Navigation.findNavController(holder.itemView).navigate(
+                    R.id.action_mainFragment_to_animeDetailFragment,
+                    bundle)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -35,6 +48,7 @@ class AnimeAdapter(val items: ArrayList<DataAnime>, val context: Context) : Recy
         if (reset) clear()
         items.addAll(data)
         notifyDataSetChanged()
+        Log.d("Log", "AnimeAdapter addList()");
     }
 
     fun clear() {

@@ -36,7 +36,7 @@ class KitsuRepository(private val service: RetrofitClient) {
      * Search repositories whose names match the sort.
      */
     fun search(sort: String): AnimeSearchResult {
-        Log.d("GithubRepository", "New sort: $sort")
+        Log.d("Log", "KitsuRepository New sort: $sort")
         lastPageOffset = 0
 
         requestAnimeList(NETWORK_PAGE_SIZE, lastPageOffset, sort)
@@ -55,13 +55,17 @@ class KitsuRepository(private val service: RetrofitClient) {
         service.getAnimes(pageLimit, pageOffset, sort)
                 .enqueue(object : Callback<BaseAnime> {
                     override fun onResponse(call: Call<BaseAnime>, response: Response<BaseAnime>) {
+                        Log.d("Log", "Repository onResponse")
+                        Log.d("Log", "Repository lastPageOffset="+ lastPageOffset)
                         lastPageOffset += NETWORK_PAGE_SIZE
-                        isRequestInProgress = false
                         if (animeList.value != null && animeList.value!!.isNotEmpty()) {
                             animeList.postValue((animeList.value!!.toTypedArray() + response.body()!!.data!!.toTypedArray()).toList())
+                            Log.d("Log", "Repository animeList.postValue((animeList.value!!.toTypedArray() + response.body()!!.data!!.toTypedArray()).toList())")
                         } else {
                             animeList.postValue(response.body()!!.data)
+                            Log.d("Log", "Repository animeList.postValue(response.body()!!.data)")
                         }
+                        isRequestInProgress = false
                     }
 
                     override fun onFailure(call: Call<BaseAnime>, t: Throwable) {

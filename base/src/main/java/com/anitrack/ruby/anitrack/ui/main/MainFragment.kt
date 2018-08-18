@@ -1,6 +1,7 @@
 package com.anitrack.ruby.anitrack.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.anitrack.ruby.anitrack.R
@@ -34,6 +36,9 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        Log.d("Log", "MainFragment onActivityCreated()");
+        //TODO On back tries to crete a new fragment after entering detail and pressing back
+
         //List setup
         adapter = AnimeAdapter(arrayListOf(), context!!)
         rv_list.adapter = adapter
@@ -52,7 +57,6 @@ class MainFragment : Fragment() {
         })
 
         //ViewModle setup
-        //TODO Add cnstrctor params
         viewModel = ViewModelProviders.of(this).get(MainViewModel::class.java)
         viewModel.repository = KitsuRepository(RetrofitClient())
         viewModel.searchAnime(KitsuRepository.SORT_POPULARITY, false);
@@ -69,4 +73,5 @@ class MainFragment : Fragment() {
         super.onDestroyView()
         adapter.clear()
     }
+
 }

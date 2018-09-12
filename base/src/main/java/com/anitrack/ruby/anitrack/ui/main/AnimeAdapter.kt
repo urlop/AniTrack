@@ -10,6 +10,7 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.anitrack.ruby.anitrack.R
 import com.anitrack.ruby.anitrack.network.models.DataAnime
+import com.anitrack.ruby.anitrack.ui.detail.AnimeDetailFragment
 import com.anitrack.ruby.anitrack.utils.ViewUtils
 import com.squareup.picasso.Picasso
 
@@ -31,9 +32,8 @@ class AnimeAdapter(val items: ArrayList<DataAnime>, val context: Context) : Recy
         Picasso.get().load(items.get(position).attributes.posterImage?.small).into(holder.iv_background)
 
         holder.itemView.setOnClickListener{
-            val bundle = bundleOf("ARG_ANIME" to items.get(position))
+            val bundle = bundleOf(AnimeDetailFragment.ARG_ANIME to items.get(position))
 
-            //TODO Fix back removes first element randomly
             Navigation.findNavController(holder.itemView).navigate(
                     R.id.action_mainFragment_to_animeDetailFragment,
                     bundle)

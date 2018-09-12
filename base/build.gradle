@@ -5,7 +5,6 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion "28.0.1"
     baseFeature true
     defaultConfig {
         minSdkVersion 19
@@ -25,21 +24,16 @@ androidExtensions {
     experimental = true
 }
 
-/*noArg {
-    annotation("com.my.Annotation")
-    invokeInitializers = true
-}*/
-
 dependencies {
-    api 'androidx.appcompat:appcompat:1.0.0-rc01'
+    api 'androidx.appcompat:appcompat:1.0.0-rc02'
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 
-    api 'androidx.legacy:legacy-support-v4:1.0.0-rc01'
+    api 'androidx.legacy:legacy-support-v4:1.0.0-rc02'
     implementation 'androidx.arch.core:core-common:2.0.0-rc01'
-    implementation 'androidx.core:core-ktx:1.0.0-rc01'
-    implementation 'androidx.recyclerview:recyclerview:1.0.0-rc01'
-    api 'androidx.constraintlayout:constraintlayout:1.1.2'
-    implementation 'androidx.cardview:cardview:1.0.0-rc01'
+    implementation 'androidx.core:core-ktx:1.0.0-rc02'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0-rc02'
+    api 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.cardview:cardview:1.0.0-rc02'
 
     implementation "androidx.room:room-runtime:2.0.0-rc01"
     annotationProcessor "androidx.room:room-compiler:2.0.0-rc01"
@@ -49,6 +43,7 @@ dependencies {
     implementation 'androidx.paging:paging-runtime:2.0.0-rc01'
 
     implementation 'android.arch.navigation:navigation-fragment:1.0.0-alpha05'
+    implementation 'android.arch.navigation:navigation-ui:1.0.0-alpha05'
 
     implementation 'com.squareup.retrofit2:retrofit:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
@@ -63,4 +58,5 @@ dependencies {
 
     application project(':app')
     feature project(':allanime')
+    implementation 'com.google.android.material:material:1.0.0-rc02'
 }

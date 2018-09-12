@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation_main"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation_main"
     app:startDestination="@id/mainFragment">
 
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.anitrack.ruby.anitrack.ui.main.MainFragment"
-        android:label="MainFragment" >
+        android:label="Main"
+        tools:layout="@layout/main_fragment">
         <action
             android:id="@+id/action_mainFragment_to_animeDetailFragment"
             app:destination="@id/animeDetailFragment"
@@ -18,7 +21,8 @@
     <fragment
         android:id="@+id/animeDetailFragment"
         android:name="com.anitrack.ruby.anitrack.ui.detail.AnimeDetailFragment"
-        android:label="AnimeDetailFragment" >
+        android:label="Anime Detail"
+        tools:layout="@layout/fragment_anime_detail">
         <argument
             android:name="ARG_ANIME"
             app:argType="com.anitrack.ruby.anitrack.network.models.DataAnime" />

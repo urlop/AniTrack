@@ -49,7 +49,7 @@
             android:id="@+id/v_bottom_container"
             android:layout_width="match_parent"
             android:layout_height="@dimen/list_all_height_bottom_bar"
-            android:background="@color/colorPrimaryTransparent"
+            android:background="@color/colorPrimaryTransparent80"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

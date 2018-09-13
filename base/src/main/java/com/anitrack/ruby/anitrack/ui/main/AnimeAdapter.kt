@@ -22,17 +22,19 @@ class AnimeAdapter(val items: ArrayList<DataAnime>, val context: Context) : Recy
     override fun onBindViewHolder(holder: AnimeViewHolder, position: Int) {
         //TODO Animate correctly while appearing
 
-        val averageRating = items.get(position).attributes.averageRating ?: "0"
+        val item: DataAnime = items.get(position)
+
+        val averageRating = item.attributes.averageRating ?: "0"
         val averageStar = averageRating.toFloat() * 5 / 100 //100 points to 5 stars
 
         // TODO get by titles order and check for blanks {if (english.isNullOrBlank()) english else null}
-        // items.get(position).attributes.titles?.english ?: items.get(position).attributes.titles?.englishUniteStates ?: items.get(position).attributes.titles?.englishJapan ?: items.get(position).attributes.titles?.japanesseJapan ?: items.get(position).attributes.canonicalTitle
-        holder.tv_name?.text = items.get(position).attributes.canonicalTitle
-        holder.tv_rating?.text = ViewUtils.asRoundedDecimal(averageStar, 1)
-        Picasso.get().load(items.get(position).attributes.posterImage?.small).into(holder.iv_background)
+        // item.attributes.titles?.english ?: item.attributes.titles?.englishUniteStates ?: item.attributes.titles?.englishJapan ?: item.attributes.titles?.japanesseJapan ?: item.attributes.canonicalTitle
+        holder.tv_name?.text = item.attributes.canonicalTitle
+        holder.tv_rating?.text = ViewUtils.asRoundedDecimal(item.attributes.averageStar ?: 0f, 1)
+        Picasso.get().load(item.attributes.posterImage?.small).into(holder.iv_background)
 
         holder.itemView.setOnClickListener{
-            val bundle = bundleOf(AnimeDetailFragment.ARG_ANIME to items.get(position))
+            val bundle = bundleOf(AnimeDetailFragment.ARG_ANIME to item)
 
             Navigation.findNavController(holder.itemView).navigate(
                     R.id.action_mainFragment_to_animeDetailFragment,

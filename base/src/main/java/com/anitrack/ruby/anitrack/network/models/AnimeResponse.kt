@@ -2,6 +2,7 @@ package com.anitrack.ruby.anitrack.network.models
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -14,7 +15,11 @@ data class AnimeProductions(val links: Links?) : Parcelable
 data class AnimeStaff(val links: Links?) : Parcelable
 
 @Parcelize
-data class Attributes(val createdAt: String?, val updatedAt: String?, val slug: String?, val synopsis: String?, val coverImageTopOffset: Number?, val titles: Titles?, val canonicalTitle: String?, val abbreviatedTitles: List<String>?, val averageRating: String?, val ratingFrequencies: RatingFrequencies?, val userCount: Number?, val favoritesCount: Number?, val startDate: String?, val endDate: String?, val popularityRank: Number?, val ratingRank: Number?, val ageRating: String?, val ageRatingGuide: String?, val subtype: String?, val status: String?, val tba: String?, val posterImage: PosterImage?, val coverImage: CoverImage?, val episodeCount: Number?, val episodeLength: Number?, val youtubeVideoId: String?, val showType: String?, val nsfw: Boolean?) : Parcelable
+data class Attributes(val createdAt: String?, val updatedAt: String?, val slug: String?, val synopsis: String?, val coverImageTopOffset: Number?, val titles: Titles?, val canonicalTitle: String?, val abbreviatedTitles: List<String>?, val averageRating: String?, val ratingFrequencies: RatingFrequencies?, val userCount: Number?, val favoritesCount: Number?, val startDate: String?, val endDate: String?, val popularityRank: Number?, val ratingRank: Number?, val ageRating: String?, val ageRatingGuide: String?, val subtype: String?, val status: String?, val tba: String?, val posterImage: PosterImage?, val coverImage: CoverImage?, val episodeCount: Number?, val episodeLength: Number?, val youtubeVideoId: String?, val showType: String?, val nsfw: Boolean?) : Parcelable {
+    @IgnoredOnParcel
+    val averageStar: Float?
+            get() = (averageRating ?: "0").toFloat() * 5 / 100 //100 points to 5 stars
+}
 
 @Parcelize
 data class BaseAnime(val data: List<DataAnime>?) : Parcelable

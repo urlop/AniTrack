@@ -1,6 +1,7 @@
 package com.anitrack.ruby.anitrack.network
 
 import com.anitrack.ruby.anitrack.network.models.BaseAnime
+import com.anitrack.ruby.anitrack.network.models.genre.BaseGenre
 import com.anitrack.ruby.anitrack.ui.main.RedditNewsResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -43,5 +44,9 @@ class RetrofitClient {
 
     fun getAnimes(pageLimit: Number, pageOffset: Number, sort: String): Call<BaseAnime> {
         return api.getAnimes(pageLimit, pageOffset, sort)
+    }
+
+    fun getGenre(id: String): Call<BaseGenre> {
+        return api.getGenres(id)
     }
 }

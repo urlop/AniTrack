@@ -7,7 +7,16 @@ import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.anitrack.ruby.anitrack.ui.main.MainFragment
 
-class MainActivity : AppCompatActivity() {
+/**
+ * Temporary solution to dynamically change title of actionbar controlled by Navigation component
+ * Should be removed as soon as the bug on Navigation will be fixed: (https://issuetracker.google.com/issues/80267266)
+ *
+ * Source: https://stackoverflow.com/questions/50599238/dynamic-actionbar-title-from-a-fragment-using-androidx-navigation
+ */
+interface TempToolbarTitleListener {
+    fun updateTitle(title: String)
+}
+class MainActivity : AppCompatActivity(), TempToolbarTitleListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,6 +28,10 @@ class MainActivity : AppCompatActivity() {
         }*/
 
         setupNavigation()
+    }
+
+    override fun updateTitle(title: String) {
+        supportActionBar?.title = title
     }
 
     //To change titles in actionBar based on the label in each fragment

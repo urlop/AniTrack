@@ -13,7 +13,7 @@ import retrofit2.Response
 /**
  * Repository class that works with local and remote data sources.
  */
-class KitsuRepository(private val service: RetrofitClient) {
+class AnimeRepository(private val service: RetrofitClient) {
 
     companion object {
         const val SORT_POPULARITY = "ratingRank"
@@ -32,9 +32,6 @@ class KitsuRepository(private val service: RetrofitClient) {
 
     var animeList: MutableLiveData<List<DataAnime>> = MutableLiveData()
 
-    /**
-     * Search repositories whose names match the sort.
-     */
     fun search(sort: String): AnimeSearchResult {
         lastPageOffset = 0
 
@@ -54,13 +51,18 @@ class KitsuRepository(private val service: RetrofitClient) {
         service.getAnimes(pageLimit, pageOffset, sort)
                 .enqueue(object : Callback<BaseAnime> {
                     override fun onResponse(call: Call<BaseAnime>, response: Response<BaseAnime>) {
-                        lastPageOffset += NETWORK_PAGE_SIZE
-                        if (animeList.value != null && animeList.value!!.isNotEmpty()) {
-                            animeList.postValue((animeList.value!!.toTypedArray() + response.body()!!.data!!.toTypedArray()).toList())
-                        } else {
-                            animeList.postValue(response.body()!!.data)
+                        try {
+                            lastPageOffset += NETWORK_PAGE_SIZE
+                            if (animeList.value != null && animeList.value!!.isNotEmpty()) {
+                                animeList.postValue((animeList.value!!.toTypedArray() + response.body()!!.data!!.toTypedArray()).toList())
+                            } else {
+                                animeList.postValue(response.body()!!.data)
+                            }
+                            isRequestInProgress = false
+                        } catch (e : Exception) {
+                            //TODO Handle 404 {"error":"We couldn't find the record you were looking for."}
+                            isRequestInProgress = false
                         }
-                        isRequestInProgress = false
                     }
 
                     override fun onFailure(call: Call<BaseAnime>, t: Throwable) {

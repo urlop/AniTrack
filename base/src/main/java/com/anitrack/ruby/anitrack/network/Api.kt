@@ -1,9 +1,10 @@
 package com.anitrack.ruby.anitrack.network
 
 import com.anitrack.ruby.anitrack.network.models.BaseAnime
-import com.anitrack.ruby.anitrack.ui.main.RedditNewsResponse
+import com.anitrack.ruby.anitrack.network.models.genre.BaseGenre
 import retrofit2.Call
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface Api {
@@ -17,4 +18,8 @@ interface Api {
                   @Query("page[offset]") pageOffset: Number,
                   @Query("sort") sort: String)
             : Call<BaseAnime>
+
+    @GET("anime/{id}/genres")
+    fun getGenres(@Path("id") id: String)
+            : Call<BaseGenre>
 }

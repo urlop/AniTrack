@@ -1,11 +1,10 @@
 package com.anitrack.ruby.anitrack.ui.main
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.anitrack.ruby.anitrack.data.KitsuRepository
+import com.anitrack.ruby.anitrack.data.AnimeRepository
 import com.anitrack.ruby.anitrack.model.AnimeSearchResult
 import com.anitrack.ruby.anitrack.network.models.DataAnime
 
@@ -19,7 +18,7 @@ class MainViewModel() : ViewModel() {
     //this is the data that we will fetch asynchronously
     //private val animeList: MutableLiveData<List<DataAnime>>? = null
     // var error: MutableLiveData<Boolean>? = null;
-    lateinit var repository: KitsuRepository
+    lateinit var repository: AnimeRepository
 
     private val queryLiveData = MutableLiveData<String>()
     private val animeResult: LiveData<AnimeSearchResult> = Transformations.map(queryLiveData, {

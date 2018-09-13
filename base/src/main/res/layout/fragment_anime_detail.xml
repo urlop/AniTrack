@@ -73,6 +73,7 @@
             <include layout="@layout/include_divider_line" />
 
             <com.google.android.material.chip.ChipGroup
+                android:id="@+id/cg_genres"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/default_space"
@@ -80,13 +81,12 @@
                 android:padding="@dimen/default_space"
                 app:chipSpacingVertical="@dimen/default_space">
 
-                <com.google.android.material.chip.Chip
-                    android:id="@+id/chip1"
+                <!--com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Texto1"
                     android:visibility="visible"
-                    tools:visibility="visible" />
+                    tools:visibility="visible" /-->
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -109,14 +109,29 @@
         </LinearLayout>
     </ScrollView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <TextView
+        android:id="@+id/tv_rating"
         android:layout_width="@dimen/fab_size"
         android:layout_height="@dimen/fab_size"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="@dimen/default_space"
+        android:background="@drawable/bg_circle_purple"
+        android:elevation="6dp"
+        android:gravity="center"
+        android:textColor="@color/white"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="4.4" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:layout_width="@dimen/fab_size"
+        android:layout_height="@dimen/fab_size"
+        android:layout_marginBottom="@dimen/default_space"
+        android:layout_marginEnd="@dimen/default_space"
         android:src="@drawable/ic_add_white"
         app:fabCustomSize="@dimen/fab_size"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

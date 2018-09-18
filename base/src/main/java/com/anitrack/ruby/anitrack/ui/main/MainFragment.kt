@@ -26,7 +26,7 @@ class MainFragment : Fragment() {
     lateinit var adapter: AnimeAdapter
     private lateinit var viewModel: MainViewModel
     private lateinit var observerResult: Observer<List<DataAnime>>
-    private lateinit var observerNetworkErros: Observer<String>
+    private lateinit var observerNetworkErrors: Observer<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,19 +64,19 @@ class MainFragment : Fragment() {
         observerResult = Observer { list ->
             adapter.addList(list as ArrayList<DataAnime>, true)
         }
-        observerNetworkErros = Observer<String> {
+        observerNetworkErrors = Observer<String> {
             Toast.makeText(context, "\uD83D\uDE28 Wooops ${it}", Toast.LENGTH_LONG).show()
         }
 
         viewModel.result.observe(this, observerResult)
-        viewModel.networkErrors.observe(this, observerNetworkErros)
+        viewModel.networkErrors.observe(this, observerNetworkErrors)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         adapter.clear()
         viewModel.result.removeObserver(observerResult)
-        viewModel.networkErrors.removeObserver(observerNetworkErros)
+        viewModel.networkErrors.removeObserver(observerNetworkErrors)
     }
 
 }

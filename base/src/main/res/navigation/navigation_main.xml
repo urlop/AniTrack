@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/mainFragment"
         android:name="com.anitrack.ruby.anitrack.ui.main.MainFragment"
-        android:label="Main"
+        android:label="AniTrack"
         tools:layout="@layout/main_fragment">
         <action
             android:id="@+id/action_mainFragment_to_animeDetailFragment"

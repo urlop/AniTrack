@@ -33,7 +33,7 @@ class AnimeAdapter(val items: ArrayList<DataAnime>, val context: Context) : Recy
         holder.tv_rating?.text = ViewUtils.asRoundedDecimal(item.attributes.averageStar ?: 0f, 1)
         Picasso.get().load(item.attributes.posterImage?.small).into(holder.iv_background)
 
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             val bundle = bundleOf(AnimeDetailFragment.ARG_ANIME to item)
 
             Navigation.findNavController(holder.itemView).navigate(

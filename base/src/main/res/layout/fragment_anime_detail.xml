@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".ui.detail.AnimeDetailFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,6 +27,10 @@
                     android:layout_width="0dp"
                     android:layout_height="@dimen/detail_background_image_height"
                     android:background="@color/colorPrimaryDark"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:scaleType="centerCrop"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
@@ -81,12 +84,12 @@
                 android:padding="@dimen/default_space"
                 app:chipSpacingVertical="@dimen/default_space">
 
-                <!--com.google.android.material.chip.Chip
+                <com.google.android.material.chip.Chip
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Texto1"
-                    android:visibility="visible"
-                    tools:visibility="visible" /-->
+                    android:visibility="gone"
+                    tools:text="Texto"
+                    tools:visibility="visible" />
 
             </com.google.android.material.chip.ChipGroup>
 
@@ -98,10 +101,12 @@
                 android:layout_margin="@dimen/default_space"
                 android:text="You can watch in on:" />
 
-            <View
+            <LinearLayout
                 android:id="@+id/v_container_watch_on"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingStart="@dimen/default_space"/>
 
             <Space
                 android:layout_width="wrap_content"
@@ -127,11 +132,11 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:layout_width="@dimen/fab_size"
         android:layout_height="@dimen/fab_size"
-        android:layout_marginBottom="@dimen/default_space"
         android:layout_marginEnd="@dimen/default_space"
+        android:layout_marginBottom="@dimen/default_space"
         android:src="@drawable/ic_add_white"
         app:fabCustomSize="@dimen/fab_size"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,4 +22,6 @@
     <!-- Anime Detail -->
     <dimen name="play_button_size">80dp</dimen>
     <dimen name="detail_background_image_height">226dp</dimen>
+    <dimen name="streaming_button_size">40dp</dimen>
+
 </resources>

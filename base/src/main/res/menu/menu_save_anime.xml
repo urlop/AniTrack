@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_watched"
+        android:icon="@drawable/ic_check_circle_white"
+        android:title="@string/anime_detail_option_watched" />
+    <item
+        android:id="@+id/menu_watch_later"
+        android:icon="@drawable/ic_slow_motion_video_white"
+        android:title="@string/anime_detail_option_watch_later" />
+</menu>

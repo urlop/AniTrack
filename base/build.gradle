@@ -18,6 +18,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
 }
 
 androidExtensions {
@@ -55,6 +61,8 @@ dependencies {
     implementation "android.arch.lifecycle:viewmodel:1.1.1"
 
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'com.hlab.fabrevealmenu:fab-reveal-menu:1.0.3'
 
     application project(':app')
     feature project(':allanime')

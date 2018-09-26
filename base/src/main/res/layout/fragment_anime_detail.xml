@@ -88,6 +88,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
+                    app:chipBackgroundColor="@color/colorAccent"
+                    android:textColor="@color/white"
                     tools:text="Texto"
                     tools:visibility="visible" />
 
@@ -130,6 +132,7 @@
         tools:text="4.4" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_save"
         android:layout_width="@dimen/fab_size"
         android:layout_height="@dimen/fab_size"
         android:layout_marginEnd="@dimen/default_space"
@@ -138,5 +141,20 @@
         app:fabCustomSize="@dimen/fab_size"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.hlab.fabrevealmenu.view.FABRevealMenu
+        android:id="@+id/fab_save_menu"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:animateItems="true"
+        app:menuBackgroundColor="@color/colorAccent"
+        app:menuDirection="up"
+        app:menuRes="@menu/menu_save_anime"
+        app:menuSize="normal"
+        app:menuTitleTextColor="@color/colorWhite"
+        app:showOverlay="true"
+        app:showTitle="true" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

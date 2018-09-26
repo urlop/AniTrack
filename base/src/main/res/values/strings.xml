@@ -2,5 +2,6 @@
     <string name="app_name">AniTrack</string>
     <string name="detail_play_button_description">play button</string>
 
-
+    <string name="anime_detail_option_watched">Watched</string>
+    <string name="anime_detail_option_watch_later">Watch Later</string>
 </resources>

@@ -4,8 +4,10 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
-import androidx.navigation.ui.NavigationUI.setupWithNavController
-import com.anitrack.ruby.anitrack.ui.main.MainFragment
+import com.anitrack.ruby.anitrack.ui.OnBackPressedListener
+import androidx.navigation.fragment.NavHostFragment
+
+
 
 /**
  * Temporary solution to dynamically change title of actionbar controlled by Navigation component
@@ -46,4 +48,12 @@ class MainActivity : AppCompatActivity(), TempToolbarTitleListener {
     override fun onSupportNavigateUp() =
             findNavController(this, R.id.my_nav_host_fragment).navigateUp()
 
+    override fun onBackPressed() {
+        //TODO Fix kotlin.KotlinNullPointerException
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment)
+        val fragment = navHostFragment!!.getChildFragmentManager().fragments[0]
+        if ((fragment as? OnBackPressedListener)?.onBackPressed()!!.not()) {
+            super.onBackPressed()
+        }
+    }
 }

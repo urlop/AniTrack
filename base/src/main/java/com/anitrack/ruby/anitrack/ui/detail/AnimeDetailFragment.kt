@@ -24,18 +24,36 @@ import com.anitrack.ruby.anitrack.utils.ViewUtils
 import com.google.android.material.chip.Chip
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_anime_detail.*
-import android.net.Proxy.getHost
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import androidx.core.view.marginEnd
 import com.anitrack.ruby.anitrack.utils.EnumStreaming
 import java.net.URL
-import com.anitrack.ruby.anitrack.MainActivity
+import com.anitrack.ruby.anitrack.ui.OnBackPressedListener
+import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener
+import com.hlab.fabrevealmenu.view.FABRevealMenu
 
 
+class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressedListener {
+    override fun onBackPressed(): Boolean {
+        if (fab_save_menu != null) {
+            //action not popBackStack
+            if (fab_save_menu.isShowing()) {
+                fab_save_menu.closeMenu();
+                return true;
+            }
+        }
+        return false;
+    }
 
-
-class AnimeDetailFragment : Fragment() {
+    override fun onMenuItemSelected(view: View?, id: Int) {
+        if (id == R.id.menu_watched) {
+            Toast.makeText(context, "menu_watched", Toast.LENGTH_SHORT).show();
+        } else if (id == R.id.menu_watch_later) {
+            Toast.makeText(context, "menu_watch_later", Toast.LENGTH_SHORT).show();
+        }
+    }
 
     companion object {
         val ARG_ANIME = "ARG_ANIME"
@@ -83,6 +101,11 @@ class AnimeDetailFragment : Fragment() {
             watchYoutubeVideo(context!!, anime.attributes.youtubeVideoId!!)
         }
 
+        //attach menu to fab
+        fab_save_menu.bindAnchorView(fab_save);
+        //set menu selection listener
+        fab_save_menu.setOnFABMenuSelectedListener(this);
+
         genreViewModel.search(anime.id ?: "0");
         streamingViewModel.search(anime.id ?: "0");
 
@@ -91,6 +114,8 @@ class AnimeDetailFragment : Fragment() {
             for (item in list) {
                 val chip = Chip(cg_genres.context)
                 chip.text = item.attributes?.name
+                chip.setTextColor(ContextCompat.getColor(context!!, R.color.white))
+                chip.setChipBackgroundColorResource(R.color.colorAccent)
 
                 // necessary to get single selection working
                 chip.isClickable = true
@@ -143,6 +168,7 @@ class AnimeDetailFragment : Fragment() {
         } catch (ex: ActivityNotFoundException) {
             context.startActivity(webIntent)
         }
-
     }
+
+
 }

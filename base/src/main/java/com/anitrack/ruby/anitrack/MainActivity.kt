@@ -8,7 +8,6 @@ import com.anitrack.ruby.anitrack.ui.OnBackPressedListener
 import androidx.navigation.fragment.NavHostFragment
 
 
-
 /**
  * Temporary solution to dynamically change title of actionbar controlled by Navigation component
  * Should be removed as soon as the bug on Navigation will be fixed: (https://issuetracker.google.com/issues/80267266)
@@ -18,6 +17,7 @@ import androidx.navigation.fragment.NavHostFragment
 interface TempToolbarTitleListener {
     fun updateTitle(title: String)
 }
+
 class MainActivity : AppCompatActivity(), TempToolbarTitleListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,10 +49,10 @@ class MainActivity : AppCompatActivity(), TempToolbarTitleListener {
             findNavController(this, R.id.my_nav_host_fragment).navigateUp()
 
     override fun onBackPressed() {
-        //TODO Fix kotlin.KotlinNullPointerException
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment)
         val fragment = navHostFragment!!.getChildFragmentManager().fragments[0]
-        if ((fragment as? OnBackPressedListener)?.onBackPressed()!!.not()) {
+
+        if ((fragment as? OnBackPressedListener)?.onBackPressed() != true) {
             super.onBackPressed()
         }
     }

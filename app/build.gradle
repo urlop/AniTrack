@@ -36,6 +36,6 @@ androidExtensions {
 }
 
 dependencies {
-    implementation project(':allanime')
     implementation project(':base')
+    implementation project(':allanime')
 }

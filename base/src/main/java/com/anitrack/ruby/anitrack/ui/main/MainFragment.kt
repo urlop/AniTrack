@@ -19,6 +19,8 @@ import com.anitrack.ruby.anitrack.network.models.DataAnime
 
 class MainFragment : Fragment() {
 
+    //TODO use refresh loader to load again
+
     companion object {
         fun newInstance() = MainFragment()
     }

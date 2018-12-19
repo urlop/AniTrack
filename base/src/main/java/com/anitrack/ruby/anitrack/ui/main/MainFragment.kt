@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anitrack.ruby.anitrack.R
 import com.anitrack.ruby.anitrack.data.AnimeRepository
 import com.anitrack.ruby.anitrack.network.RetrofitClient
@@ -17,9 +18,7 @@ import kotlinx.android.synthetic.main.main_fragment.*
 import com.anitrack.ruby.anitrack.network.models.DataAnime
 
 
-class MainFragment : Fragment() {
-
-    //TODO use refresh loader to load again
+class MainFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     companion object {
         fun newInstance() = MainFragment()
@@ -44,6 +43,24 @@ class MainFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        setup()
+
+        viewModel.searchAnime(AnimeRepository.SORT_POPULARITY, false, true);
+
+        observerResult = Observer { list ->
+            adapter.addList(list as ArrayList<DataAnime>, true)
+            srl_refresh.isRefreshing = false
+        }
+        observerNetworkErrors = Observer<String> {
+            Toast.makeText(context, "\uD83D\uDE28 Wooops ${it}", Toast.LENGTH_LONG).show()
+            srl_refresh.isRefreshing = false
+        }
+
+        viewModel.result.observe(this, observerResult)
+        viewModel.networkErrors.observe(this, observerNetworkErrors)
+    }
+
+    fun setup() {
         //List setup
         adapter = AnimeAdapter(arrayListOf(), context!!)
         rv_list.adapter = adapter
@@ -61,17 +78,9 @@ class MainFragment : Fragment() {
             }
         })
 
-        viewModel.searchAnime(AnimeRepository.SORT_POPULARITY, false);
-
-        observerResult = Observer { list ->
-            adapter.addList(list as ArrayList<DataAnime>, true)
-        }
-        observerNetworkErrors = Observer<String> {
-            Toast.makeText(context, "\uD83D\uDE28 Wooops ${it}", Toast.LENGTH_LONG).show()
-        }
-
-        viewModel.result.observe(this, observerResult)
-        viewModel.networkErrors.observe(this, observerNetworkErrors)
+        //Refresh setup
+        srl_refresh.isEnabled = true
+        srl_refresh.setOnRefreshListener(this)
     }
 
     override fun onDestroyView() {
@@ -79,6 +88,11 @@ class MainFragment : Fragment() {
         adapter.clear()
         viewModel.result.removeObserver(observerResult)
         viewModel.networkErrors.removeObserver(observerNetworkErrors)
+    }
+
+    override fun onRefresh() {
+        adapter.clear()
+        viewModel.searchAnime(AnimeRepository.SORT_POPULARITY, false, true);
     }
 
 }

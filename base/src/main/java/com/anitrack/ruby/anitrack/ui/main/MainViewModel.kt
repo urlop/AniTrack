@@ -33,10 +33,10 @@ class MainViewModel() : ViewModel() {
     /**
      * Search a repository based on a query string.
      */
-    fun searchAnime(sort: String, reverseSort: Boolean) {
+    fun searchAnime(sort: String, reverseSort: Boolean, reset: Boolean) {
         var finalSortQuery = sort
         if (reverseSort) finalSortQuery = reverseSortString(finalSortQuery)
-        if (queryLiveData.value == finalSortQuery) return
+        if (reset.not() && queryLiveData.value == finalSortQuery) return
         queryLiveData.postValue(finalSortQuery)
     }
 

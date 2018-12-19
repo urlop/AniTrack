@@ -1,7 +1,5 @@
 package com.anitrack.ruby.anitrack.ui.java_reference;
 
-import com.anitrack.ruby.anitrack.ui.main.RedditChildrenResponse;
-
 import java.util.List;
 
 import androidx.lifecycle.LiveData;

@@ -3,7 +3,6 @@ package com.anitrack.ruby.anitrack.network
 import com.anitrack.ruby.anitrack.network.models.BaseAnime
 import com.anitrack.ruby.anitrack.network.models.genre.BaseGenre
 import com.anitrack.ruby.anitrack.network.models.streaming.BaseStreaming
-import com.anitrack.ruby.anitrack.ui.main.RedditNewsResponse
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

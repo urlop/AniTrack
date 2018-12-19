@@ -1,4 +1,4 @@
-package com.anitrack.ruby.anitrack.ui.main
+package com.anitrack.ruby.anitrack.ui.java_reference
 
 class Hero {
     private val name: String? = null

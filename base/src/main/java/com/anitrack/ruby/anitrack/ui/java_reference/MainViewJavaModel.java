@@ -1,13 +1,12 @@
-package com.anitrack.ruby.anitrack.ui.main;
+package com.anitrack.ruby.anitrack.ui.java_reference;
+
+import com.anitrack.ruby.anitrack.ui.main.RedditChildrenResponse;
 
 import java.util.List;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class MainViewJavaModel extends ViewModel {
     //this is the data that we will fetch asynchronously

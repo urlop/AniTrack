@@ -1,4 +1,4 @@
-package com.anitrack.ruby.anitrack.ui.main;
+package com.anitrack.ruby.anitrack.ui.java_reference;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -6,16 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.anitrack.ruby.anitrack.R;
-import com.anitrack.ruby.anitrack.network.models.DataAnime;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.anitrack.ruby.anitrack.ui.main.AnimeAdapter;
+import com.anitrack.ruby.anitrack.ui.main.MainViewModel;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 public class JavaFragment extends Fragment {
 

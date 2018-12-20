@@ -1,5 +1,6 @@
 package com.anitrack.ruby.anitrack.ui.main
 
+import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anitrack.ruby.anitrack.R
+import com.anitrack.ruby.anitrack.ViewModelFactory
 import com.anitrack.ruby.anitrack.data.AnimeRepository
 import com.anitrack.ruby.anitrack.network.RetrofitClient
 import kotlinx.android.synthetic.main.main_fragment.*
@@ -33,9 +35,7 @@ class MainFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(this)
-                .get(MainViewModel::class.java)
-        viewModel.repository = AnimeRepository(RetrofitClient())
+        viewModel = ViewModelProviders.of(activity!!, ViewModelFactory.getInstance(activity!!.applicationContext, RetrofitClient())).get(MainViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

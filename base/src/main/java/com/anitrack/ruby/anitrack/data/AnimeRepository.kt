@@ -13,7 +13,7 @@ import retrofit2.Response
 /**
  * Repository class that works with local and remote data sources.
  */
-class AnimeRepository(private val service: RetrofitClient) {
+class AnimeRepository(private val service: RetrofitClient) : GeneralRepository(service) {
 
     companion object {
         const val SORT_POPULARITY = "ratingRank"

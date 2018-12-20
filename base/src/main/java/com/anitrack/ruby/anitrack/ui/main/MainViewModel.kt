@@ -9,7 +9,7 @@ import com.anitrack.ruby.anitrack.model.AnimeSearchResult
 import com.anitrack.ruby.anitrack.network.models.DataAnime
 
 
-class MainViewModel() : ViewModel() {
+class MainViewModel(val repository: AnimeRepository) : ViewModel() {
 
     companion object {
         private const val VISIBLE_THRESHOLD = 5 //5
@@ -18,7 +18,7 @@ class MainViewModel() : ViewModel() {
     //this is the data that we will fetch asynchronously
     //private val animeList: MutableLiveData<List<DataAnime>>? = null
     // var error: MutableLiveData<Boolean>? = null;
-    lateinit var repository: AnimeRepository
+    //lateinit var repository: AnimeRepository
 
     private val queryLiveData = MutableLiveData<String>()
     private val animeResult: LiveData<AnimeSearchResult> = Transformations.map(queryLiveData, {

@@ -22,7 +22,7 @@ open class BaseFragment : Fragment() {
 
     /**
      * Solves problem "when the fragment is detached and re-attached, it is not destroyed and a new identical observer instance will be added in onActivityCreated()".
-     * From: https://medium.com/@BladeCoder/architecture-components-pitfalls-part-1-9300dd969808
+     * Source: https://medium.com/@BladeCoder/architecture-components-pitfalls-part-1-9300dd969808
      */
     fun <T> LiveData<T>.reObserve(owner: LifecycleOwner, observer: Observer<T>) {
         removeObserver(observer)

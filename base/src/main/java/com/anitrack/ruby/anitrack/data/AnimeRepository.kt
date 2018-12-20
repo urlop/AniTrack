@@ -22,7 +22,7 @@ class AnimeRepository(private val service: RetrofitClient) {
     }
 
     // keep the last requested page. When the request is successful, increment the page number.
-    private var lastPageOffset = 1
+    private var lastPageOffset = 0
 
     // LiveData of network errors.
     private val networkErrors = MutableLiveData<String>()

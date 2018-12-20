@@ -36,7 +36,7 @@ class MainViewModel() : ViewModel() {
     fun searchAnime(sort: String, reverseSort: Boolean, reset: Boolean) {
         var finalSortQuery = sort
         if (reverseSort) finalSortQuery = reverseSortString(finalSortQuery)
-        if (reset.not() && queryLiveData.value == finalSortQuery) return
+        if (reset.not() && queryLiveData.value == finalSortQuery) return // FIXME refreshing on rotate
         queryLiveData.postValue(finalSortQuery)
     }
 

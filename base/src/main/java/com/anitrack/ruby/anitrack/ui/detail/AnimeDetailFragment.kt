@@ -28,6 +28,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.marginEnd
+import com.anitrack.ruby.anitrack.ViewModelFactory
 import com.anitrack.ruby.anitrack.utils.EnumStreaming
 import java.net.URL
 import com.anitrack.ruby.anitrack.ui.OnBackPressedListener
@@ -67,12 +68,8 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        genreViewModel = ViewModelProviders.of(this)
-                .get(GenreViewModel::class.java)
-        genreViewModel.repository = GenreRepository(RetrofitClient())
-        streamingViewModel = ViewModelProviders.of(this)
-                .get(StreamingViewModel::class.java)
-        streamingViewModel.repository = StreamingRepository(RetrofitClient())
+        genreViewModel = ViewModelProviders.of(activity!!, ViewModelFactory.getInstance(activity!!.applicationContext, RetrofitClient())).get(GenreViewModel::class.java)
+        streamingViewModel = ViewModelProviders.of(activity!!, ViewModelFactory.getInstance(activity!!.applicationContext, RetrofitClient())).get(StreamingViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

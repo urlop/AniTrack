@@ -16,13 +16,7 @@ import retrofit2.Response
 /**
  * Repository class that works with local and remote data sources.
  */
-class GenreRepository(private val service: RetrofitClient) {
-
-    // LiveData of network errors.
-    private val networkErrors = MutableLiveData<String>()
-
-    // avoid triggering multiple requests in the same time
-    private var isRequestInProgress = false
+class GenreRepository(private val service: RetrofitClient) : GeneralRepository(service) {
 
     var genreList: MutableLiveData<List<Genre>> = MutableLiveData()
 

@@ -9,9 +9,7 @@ import com.anitrack.ruby.anitrack.model.StreamingResult
 import com.anitrack.ruby.anitrack.network.models.streaming.Streaming
 
 
-class StreamingViewModel() : ViewModel() {
-
-    lateinit var repository: StreamingRepository
+class StreamingViewModel(repository: StreamingRepository) : ViewModel() {
 
     private val queryLiveData = MutableLiveData<String>()
     private val streamingResult: LiveData<StreamingResult> = Transformations.map(queryLiveData, {

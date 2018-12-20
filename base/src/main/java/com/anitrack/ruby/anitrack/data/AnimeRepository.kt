@@ -1,6 +1,5 @@
 package com.anitrack.ruby.anitrack.data
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.anitrack.ruby.anitrack.model.AnimeSearchResult
 import com.anitrack.ruby.anitrack.network.RetrofitClient
@@ -23,12 +22,6 @@ class AnimeRepository(private val service: RetrofitClient) : GeneralRepository(s
 
     // keep the last requested page. When the request is successful, increment the page number.
     private var lastPageOffset = 0
-
-    // LiveData of network errors.
-    private val networkErrors = MutableLiveData<String>()
-
-    // avoid triggering multiple requests in the same time
-    private var isRequestInProgress = false
 
     var animeList: MutableLiveData<List<DataAnime>> = MutableLiveData()
 

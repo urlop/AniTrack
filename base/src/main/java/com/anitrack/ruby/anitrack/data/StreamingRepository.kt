@@ -12,13 +12,7 @@ import retrofit2.Response
 /**
  * Repository class that works with local and remote data sources.
  */
-class StreamingRepository(private val service: RetrofitClient) {
-
-    // LiveData of network errors.
-    private val networkErrors = MutableLiveData<String>()
-
-    // avoid triggering multiple requests in the same time
-    private var isRequestInProgress = false
+class StreamingRepository(private val service: RetrofitClient) : GeneralRepository(service) {
 
     var streamingList: MutableLiveData<List<Streaming>> = MutableLiveData()
 

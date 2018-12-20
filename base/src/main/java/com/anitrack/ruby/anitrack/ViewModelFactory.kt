@@ -23,7 +23,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.anitrack.ruby.anitrack.data.AnimeRepository
 import com.anitrack.ruby.anitrack.data.GeneralRepository
+import com.anitrack.ruby.anitrack.data.GenreRepository
+import com.anitrack.ruby.anitrack.data.StreamingRepository
 import com.anitrack.ruby.anitrack.network.RetrofitClient
+import com.anitrack.ruby.anitrack.ui.detail.GenreViewModel
+import com.anitrack.ruby.anitrack.ui.detail.StreamingViewModel
 import com.anitrack.ruby.anitrack.ui.main.MainViewModel
 
 /**
@@ -45,12 +49,10 @@ class ViewModelFactory (
                 when {
                     isAssignableFrom(MainViewModel::class.java) ->
                         MainViewModel(AnimeRepository(retrofitClient))
-                    /*isAssignableFrom(TaskDetailViewModel::class.java) ->
-                        TaskDetailViewModel(application, tasksRepository)
-                    isAssignableFrom(AddEditTaskViewModel::class.java) ->
-                        AddEditTaskViewModel(application, tasksRepository)
-                    isAssignableFrom(TasksViewModel::class.java) ->
-                        TasksViewModel(application, tasksRepository)*/
+                    isAssignableFrom(GenreViewModel::class.java) ->
+                        GenreViewModel(GenreRepository(retrofitClient))
+                    isAssignableFrom(StreamingViewModel::class.java) ->
+                        StreamingViewModel(StreamingRepository(retrofitClient))
                     else ->
                         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
                 }

@@ -9,9 +9,7 @@ import com.anitrack.ruby.anitrack.model.GenresResult
 import com.anitrack.ruby.anitrack.network.models.genre.Genre
 
 
-class GenreViewModel() : ViewModel() {
-
-    lateinit var repository: GenreRepository
+class GenreViewModel(repository: GenreRepository) : ViewModel() {
 
     private val queryLiveData = MutableLiveData<String>()
     private val genreResult: LiveData<GenresResult> = Transformations.map(queryLiveData, {

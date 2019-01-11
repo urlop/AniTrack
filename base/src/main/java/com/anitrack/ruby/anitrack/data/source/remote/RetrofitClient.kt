@@ -1,8 +1,8 @@
-package com.anitrack.ruby.anitrack.network
+package com.anitrack.ruby.anitrack.data.source.remote
 
-import com.anitrack.ruby.anitrack.network.models.BaseAnime
-import com.anitrack.ruby.anitrack.network.models.genre.BaseGenre
-import com.anitrack.ruby.anitrack.network.models.streaming.BaseStreaming
+import com.anitrack.ruby.anitrack.data.source.remote.models.BaseAnime
+import com.anitrack.ruby.anitrack.data.source.remote.models.genre.BaseGenre
+import com.anitrack.ruby.anitrack.data.source.remote.models.streaming.BaseStreaming
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -46,11 +46,11 @@ class RetrofitClient {
         return api.getAnimes(pageLimit, pageOffset, sort)
     }
 
-    fun getGenre(id: String): Call<BaseGenre> {
-        return api.getGenres(id)
+    fun getAnimeGenre(animeId: String): Call<BaseGenre> {
+        return api.getAnimeGenres(animeId)
     }
 
-    fun getStreaming(id: String): Call<BaseStreaming> {
-        return api.getStreamingLinks(id)
+    fun getAnimeStreaming(animeId: String): Call<BaseStreaming> {
+        return api.getAnimeStreamingLinks(animeId)
     }
 }

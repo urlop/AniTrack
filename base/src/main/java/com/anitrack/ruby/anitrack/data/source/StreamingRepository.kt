@@ -1,10 +1,10 @@
-package com.anitrack.ruby.anitrack.data
+package com.anitrack.ruby.anitrack.data.source
 
 import androidx.lifecycle.MutableLiveData
-import com.anitrack.ruby.anitrack.model.StreamingResult
-import com.anitrack.ruby.anitrack.network.RetrofitClient
-import com.anitrack.ruby.anitrack.network.models.streaming.BaseStreaming
-import com.anitrack.ruby.anitrack.network.models.streaming.Streaming
+import com.anitrack.ruby.anitrack.data.source.remote.StreamingResult
+import com.anitrack.ruby.anitrack.data.source.remote.RetrofitClient
+import com.anitrack.ruby.anitrack.data.source.remote.models.streaming.BaseStreaming
+import com.anitrack.ruby.anitrack.data.source.remote.models.streaming.Streaming
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -26,7 +26,7 @@ class StreamingRepository(private val service: RetrofitClient) : GeneralReposito
         if (isRequestInProgress) return
         isRequestInProgress = true
 
-        service.getStreaming(id)
+        service.getAnimeStreaming(id)
                 .enqueue(object : Callback<BaseStreaming> {
                     override fun onResponse(call: Call<BaseStreaming>, response: Response<BaseStreaming>) {
                         try {

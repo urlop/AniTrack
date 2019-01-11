@@ -1,14 +1,10 @@
-package com.anitrack.ruby.anitrack.data
+package com.anitrack.ruby.anitrack.data.source
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.anitrack.ruby.anitrack.model.AnimeSearchResult
-import com.anitrack.ruby.anitrack.model.GenresResult
-import com.anitrack.ruby.anitrack.network.RetrofitClient
-import com.anitrack.ruby.anitrack.network.models.BaseAnime
-import com.anitrack.ruby.anitrack.network.models.DataAnime
-import com.anitrack.ruby.anitrack.network.models.genre.BaseGenre
-import com.anitrack.ruby.anitrack.network.models.genre.Genre
+import com.anitrack.ruby.anitrack.data.source.remote.GenresResult
+import com.anitrack.ruby.anitrack.data.source.remote.RetrofitClient
+import com.anitrack.ruby.anitrack.data.source.remote.models.genre.BaseGenre
+import com.anitrack.ruby.anitrack.data.source.remote.models.genre.Genre
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,7 +26,7 @@ class GenreRepository(private val service: RetrofitClient) : GeneralRepository(s
         if (isRequestInProgress) return
         isRequestInProgress = true
 
-        service.getGenre(id)
+        service.getAnimeGenre(id)
                 .enqueue(object : Callback<BaseGenre> {
                     override fun onResponse(call: Call<BaseGenre>, response: Response<BaseGenre>) {
                         try {

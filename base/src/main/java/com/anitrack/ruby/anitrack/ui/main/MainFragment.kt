@@ -1,13 +1,10 @@
 package com.anitrack.ruby.anitrack.ui.main
 
-import android.app.Application
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,10 +12,10 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anitrack.ruby.anitrack.R
 import com.anitrack.ruby.anitrack.ViewModelFactory
-import com.anitrack.ruby.anitrack.data.AnimeRepository
-import com.anitrack.ruby.anitrack.network.RetrofitClient
+import com.anitrack.ruby.anitrack.data.source.AnimeRepository
+import com.anitrack.ruby.anitrack.data.source.remote.RetrofitClient
 import kotlinx.android.synthetic.main.main_fragment.*
-import com.anitrack.ruby.anitrack.network.models.DataAnime
+import com.anitrack.ruby.anitrack.data.source.remote.models.DataAnime
 import com.anitrack.ruby.anitrack.ui.BaseFragment
 
 

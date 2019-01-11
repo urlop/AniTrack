@@ -14,12 +14,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.anitrack.ruby.anitrack.R
 import com.anitrack.ruby.anitrack.TempToolbarTitleListener
-import com.anitrack.ruby.anitrack.data.GenreRepository
-import com.anitrack.ruby.anitrack.data.StreamingRepository
-import com.anitrack.ruby.anitrack.network.RetrofitClient
-import com.anitrack.ruby.anitrack.network.models.DataAnime
-import com.anitrack.ruby.anitrack.network.models.genre.Genre
-import com.anitrack.ruby.anitrack.network.models.streaming.Streaming
+import com.anitrack.ruby.anitrack.data.source.remote.RetrofitClient
+import com.anitrack.ruby.anitrack.data.source.remote.models.DataAnime
+import com.anitrack.ruby.anitrack.data.source.remote.models.genre.Genre
+import com.anitrack.ruby.anitrack.data.source.remote.models.streaming.Streaming
 import com.anitrack.ruby.anitrack.utils.ViewUtils
 import com.google.android.material.chip.Chip
 import com.squareup.picasso.Picasso
@@ -27,13 +25,11 @@ import kotlinx.android.synthetic.main.fragment_anime_detail.*
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginEnd
 import com.anitrack.ruby.anitrack.ViewModelFactory
 import com.anitrack.ruby.anitrack.utils.EnumStreaming
 import java.net.URL
 import com.anitrack.ruby.anitrack.ui.OnBackPressedListener
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener
-import com.hlab.fabrevealmenu.view.FABRevealMenu
 
 
 class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressedListener {

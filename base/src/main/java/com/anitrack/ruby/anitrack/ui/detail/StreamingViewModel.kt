@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.anitrack.ruby.anitrack.data.StreamingRepository
-import com.anitrack.ruby.anitrack.model.StreamingResult
-import com.anitrack.ruby.anitrack.network.models.streaming.Streaming
+import com.anitrack.ruby.anitrack.data.source.StreamingRepository
+import com.anitrack.ruby.anitrack.data.source.remote.StreamingResult
+import com.anitrack.ruby.anitrack.data.source.remote.models.streaming.Streaming
 
 
 class StreamingViewModel(repository: StreamingRepository) : ViewModel() {

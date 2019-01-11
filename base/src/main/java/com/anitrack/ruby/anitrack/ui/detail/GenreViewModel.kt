@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.anitrack.ruby.anitrack.data.GenreRepository
-import com.anitrack.ruby.anitrack.model.GenresResult
-import com.anitrack.ruby.anitrack.network.models.genre.Genre
+import com.anitrack.ruby.anitrack.data.source.GenreRepository
+import com.anitrack.ruby.anitrack.data.source.remote.GenresResult
+import com.anitrack.ruby.anitrack.data.source.remote.models.genre.Genre
 
 
 class GenreViewModel(repository: GenreRepository) : ViewModel() {

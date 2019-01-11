@@ -1,4 +1,4 @@
-package com.anitrack.ruby.anitrack.ui.java_reference
+package com.anitrack.ruby.anitrack.ui.javaReference
 
 class RedditNewsResponse(val data: RedditDataResponse)
 

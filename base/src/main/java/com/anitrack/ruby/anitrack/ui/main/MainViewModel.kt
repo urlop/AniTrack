@@ -4,9 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.anitrack.ruby.anitrack.data.AnimeRepository
-import com.anitrack.ruby.anitrack.model.AnimeSearchResult
-import com.anitrack.ruby.anitrack.network.models.DataAnime
+import com.anitrack.ruby.anitrack.data.source.AnimeRepository
+import com.anitrack.ruby.anitrack.data.source.remote.AnimeSearchResult
+import com.anitrack.ruby.anitrack.data.source.remote.models.DataAnime
 
 
 class MainViewModel(val repository: AnimeRepository) : ViewModel() {

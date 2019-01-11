@@ -16,16 +16,14 @@
 package com.anitrack.ruby.anitrack
 
 import android.annotation.SuppressLint
-import android.app.Application
 import android.content.Context
 import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.anitrack.ruby.anitrack.data.AnimeRepository
-import com.anitrack.ruby.anitrack.data.GeneralRepository
-import com.anitrack.ruby.anitrack.data.GenreRepository
-import com.anitrack.ruby.anitrack.data.StreamingRepository
-import com.anitrack.ruby.anitrack.network.RetrofitClient
+import com.anitrack.ruby.anitrack.data.source.AnimeRepository
+import com.anitrack.ruby.anitrack.data.source.GenreRepository
+import com.anitrack.ruby.anitrack.data.source.StreamingRepository
+import com.anitrack.ruby.anitrack.data.source.remote.RetrofitClient
 import com.anitrack.ruby.anitrack.ui.detail.GenreViewModel
 import com.anitrack.ruby.anitrack.ui.detail.StreamingViewModel
 import com.anitrack.ruby.anitrack.ui.main.MainViewModel

@@ -14,11 +14,11 @@
  * limitations under the License.
  */
 
-package com.anitrack.ruby.anitrack.model
+package com.anitrack.ruby.anitrack.data.source.remote
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.anitrack.ruby.anitrack.network.models.DataAnime
+import com.anitrack.ruby.anitrack.data.source.remote.models.DataAnime
 
 
 /**

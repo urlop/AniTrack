@@ -14,18 +14,18 @@
  * limitations under the License.
  */
 
-package com.anitrack.ruby.anitrack.model
+package com.anitrack.ruby.anitrack.data.source.remote
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.anitrack.ruby.anitrack.network.models.streaming.Streaming
+import com.anitrack.ruby.anitrack.data.source.remote.models.genre.Genre
 
 
 /**
- * StreamingResult from a search, which contains MutableLiveData<List<Streaming>> holding query data,
+ * GenresResult from a search, which contains MutableLiveData<List<Genres>> holding query data,
  * and a LiveData<String> of network error state.
  */
-data class StreamingResult(
-        val data: MutableLiveData<List<Streaming>>?,
+data class GenresResult(
+        val data: MutableLiveData<List<Genre>>?,
         val networkErrors: LiveData<String>
 )

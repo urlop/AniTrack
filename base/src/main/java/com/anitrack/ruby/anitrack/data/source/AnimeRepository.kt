@@ -1,10 +1,10 @@
-package com.anitrack.ruby.anitrack.data
+package com.anitrack.ruby.anitrack.data.source
 
 import androidx.lifecycle.MutableLiveData
-import com.anitrack.ruby.anitrack.model.AnimeSearchResult
-import com.anitrack.ruby.anitrack.network.RetrofitClient
-import com.anitrack.ruby.anitrack.network.models.BaseAnime
-import com.anitrack.ruby.anitrack.network.models.DataAnime
+import com.anitrack.ruby.anitrack.data.source.remote.AnimeSearchResult
+import com.anitrack.ruby.anitrack.data.source.remote.RetrofitClient
+import com.anitrack.ruby.anitrack.data.source.remote.models.BaseAnime
+import com.anitrack.ruby.anitrack.data.source.remote.models.DataAnime
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

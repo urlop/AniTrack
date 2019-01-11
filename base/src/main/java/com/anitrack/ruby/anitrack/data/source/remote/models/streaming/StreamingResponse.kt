@@ -1,14 +1,13 @@
-package com.anitrack.ruby.anitrack.network.models.genre
+package com.anitrack.ruby.anitrack.data.source.remote.models.streaming
 
 import android.os.Parcelable
-import com.anitrack.ruby.anitrack.network.models.DataAnime
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class BaseGenre(val data: List<Genre>?) : Parcelable
+data class BaseStreaming(val data: List<Streaming>?) : Parcelable
 
 @Parcelize
-data class Genre(
+data class Streaming(
         val id: String?,
         val type: String?,
         val links: Links?,
@@ -19,9 +18,9 @@ data class Genre(
 data class Attributes(
         val createdAt: String?,
         val updatedAt: String?,
-        val name: String?,
-        val slug: String?,
-        val description: String?
+        val url: String?,
+        val subs: List<String>?,
+        val dubs: List<String>?
 ) : Parcelable
 
 @Parcelize

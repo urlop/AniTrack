@@ -1,4 +1,4 @@
-package com.anitrack.ruby.anitrack.network.models
+package com.anitrack.ruby.anitrack.data.source.remote.models
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

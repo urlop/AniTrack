@@ -1,15 +1,13 @@
 package com.anitrack.ruby.anitrack.ui.main
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.anitrack.ruby.anitrack.R
-import com.anitrack.ruby.anitrack.network.models.DataAnime
+import com.anitrack.ruby.anitrack.data.source.remote.models.DataAnime
 import com.anitrack.ruby.anitrack.ui.detail.AnimeDetailFragment
 import com.anitrack.ruby.anitrack.utils.ViewUtils
 import com.squareup.picasso.Picasso

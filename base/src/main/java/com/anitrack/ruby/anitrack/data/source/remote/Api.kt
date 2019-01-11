@@ -1,8 +1,8 @@
-package com.anitrack.ruby.anitrack.network
+package com.anitrack.ruby.anitrack.data.source.remote
 
-import com.anitrack.ruby.anitrack.network.models.BaseAnime
-import com.anitrack.ruby.anitrack.network.models.genre.BaseGenre
-import com.anitrack.ruby.anitrack.network.models.streaming.BaseStreaming
+import com.anitrack.ruby.anitrack.data.source.remote.models.BaseAnime
+import com.anitrack.ruby.anitrack.data.source.remote.models.genre.BaseGenre
+import com.anitrack.ruby.anitrack.data.source.remote.models.streaming.BaseStreaming
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -20,11 +20,11 @@ interface Api {
                   @Query("sort") sort: String)
             : Call<BaseAnime>
 
-    @GET("anime/{id}/genres")
-    fun getGenres(@Path("id") id: String)
+    @GET("anime/{animeId}/genres")
+    fun getAnimeGenres(@Path("animeId") animeId: String)
             : Call<BaseGenre>
 
-    @GET("anime/{id}/streaming-links")
-    fun getStreamingLinks(@Path("id") id: String)
+    @GET("anime/{animeId}/streaming-links")
+    fun getAnimeStreamingLinks(@Path("animeId") animeId: String)
             : Call<BaseStreaming>
 }

@@ -1,7 +1,7 @@
-package com.anitrack.ruby.anitrack.data
+package com.anitrack.ruby.anitrack.data.source
 
 import androidx.lifecycle.MutableLiveData
-import com.anitrack.ruby.anitrack.network.RetrofitClient
+import com.anitrack.ruby.anitrack.data.source.remote.RetrofitClient
 
 open class GeneralRepository(private val service: RetrofitClient) {
 

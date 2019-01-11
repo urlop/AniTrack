@@ -26,6 +26,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.anitrack.ruby.anitrack.ViewModelFactory
+import com.anitrack.ruby.anitrack.data.source.local.models.Anime
 import com.anitrack.ruby.anitrack.utils.EnumStreaming
 import java.net.URL
 import com.anitrack.ruby.anitrack.ui.OnBackPressedListener
@@ -56,6 +57,9 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
         val ARG_ANIME = "ARG_ANIME"
     }
 
+    private lateinit var viewModel: AnimeDetailViewModel
+    private lateinit var observerExtraDetailResult: Observer<Anime>
+
     private lateinit var genreViewModel: GenreViewModel
     private lateinit var streamingViewModel: StreamingViewModel
     private lateinit var observerGenreResult: Observer<List<Genre>>
@@ -64,6 +68,8 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProviders.of(activity!!, ViewModelFactory.getInstance(activity!!.applicationContext, RetrofitClient())).get(AnimeDetailViewModel::class.java)
+
         genreViewModel = ViewModelProviders.of(activity!!, ViewModelFactory.getInstance(activity!!.applicationContext, RetrofitClient())).get(GenreViewModel::class.java)
         streamingViewModel = ViewModelProviders.of(activity!!, ViewModelFactory.getInstance(activity!!.applicationContext, RetrofitClient())).get(StreamingViewModel::class.java)
     }
@@ -78,6 +84,8 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
         super.onActivityCreated(savedInstanceState)
 
         val anime: DataAnime = arguments!!.getParcelable<DataAnime>(ARG_ANIME)
+        viewModel.initialize(anime)
+
 
         (activity as TempToolbarTitleListener).updateTitle(anime.attributes.canonicalTitle
                 ?: "Anime Detail")
@@ -99,10 +107,12 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
         //set menu selection listener
         fab_save_menu.setOnFABMenuSelectedListener(this);
 
-        genreViewModel.search(anime.id ?: "0");
-        streamingViewModel.search(anime.id ?: "0");
+        viewModel.search(anime.id ?: "0")
+        //genreViewModel.search(anime.id ?: "0");
+        //streamingViewModel.search(anime.id ?: "0");
 
-        observerGenreResult = Observer { list ->
+        observerExtraDetailResult = Observer {  }
+        /*observerGenreResult = Observer { list ->
             //TODO Filter by genre
             for (item in list) {
                 val chip = Chip(cg_genres.context)
@@ -132,24 +142,25 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
                 imageView.layoutParams = params
                 (v_container_watch_on as ViewGroup).addView(imageView)
             }
-        }
+        }*/
 
         observerNetworkErrors = Observer<String> {
             Toast.makeText(context, "\uD83D\uDE28 Wooops ${it}", Toast.LENGTH_LONG).show()
         }
 
-        genreViewModel.result.observe(this, observerGenreResult)
-        genreViewModel.networkErrors.observe(this, observerNetworkErrors)
-        streamingViewModel.result.observe(this, observerStreamingResult)
-        streamingViewModel.networkErrors.observe(this, observerNetworkErrors)
+        viewModel.animeDataResult.observe(this, observerExtraDetailResult)
+        //genreViewModel.result.observe(this, observerGenreResult)
+        //genreViewModel.networkErrors.observe(this, observerNetworkErrors)
+        //streamingViewModel.streamingDataResult.observe(this, observerStreamingResult)
+        //streamingViewModel.streamingNetworkErrors.observe(this, observerNetworkErrors)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        genreViewModel.result.removeObserver(observerGenreResult)
+        /*genreViewModel.result.removeObserver(observerGenreResult)
         genreViewModel.networkErrors.removeObserver(observerNetworkErrors)
-        streamingViewModel.result.removeObserver(observerStreamingResult)
-        streamingViewModel.networkErrors.removeObserver(observerNetworkErrors)
+        streamingViewModel.streamingDataResult.removeObserver(observerStreamingResult)
+        streamingViewModel.streamingNetworkErrors.removeObserver(observerNetworkErrors)*/
     }
 
     fun watchYoutubeVideo(context: Context, id: String) {

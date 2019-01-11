@@ -24,6 +24,7 @@ import com.anitrack.ruby.anitrack.data.source.AnimeRepository
 import com.anitrack.ruby.anitrack.data.source.GenreRepository
 import com.anitrack.ruby.anitrack.data.source.StreamingRepository
 import com.anitrack.ruby.anitrack.data.source.remote.RetrofitClient
+import com.anitrack.ruby.anitrack.ui.detail.AnimeDetailViewModel
 import com.anitrack.ruby.anitrack.ui.detail.GenreViewModel
 import com.anitrack.ruby.anitrack.ui.detail.StreamingViewModel
 import com.anitrack.ruby.anitrack.ui.main.MainViewModel
@@ -37,7 +38,7 @@ import com.anitrack.ruby.anitrack.ui.main.MainViewModel
  *
  * Source: https://github.com/googlesamples/android-architecture/tree/todo-mvvm-live-kotlin
  */
-class ViewModelFactory (
+class ViewModelFactory(
         private val context: Context,
         private val retrofitClient: RetrofitClient
 ) : ViewModelProvider.NewInstanceFactory() {
@@ -47,6 +48,8 @@ class ViewModelFactory (
                 when {
                     isAssignableFrom(MainViewModel::class.java) ->
                         MainViewModel(AnimeRepository(retrofitClient))
+                    isAssignableFrom(AnimeDetailViewModel::class.java) ->
+                        AnimeDetailViewModel(GenreRepository(retrofitClient), StreamingRepository(retrofitClient))
                     isAssignableFrom(GenreViewModel::class.java) ->
                         GenreViewModel(GenreRepository(retrofitClient))
                     isAssignableFrom(StreamingViewModel::class.java) ->
@@ -59,7 +62,8 @@ class ViewModelFactory (
     companion object {
 
         @SuppressLint("StaticFieldLeak")
-        @Volatile private var INSTANCE: ViewModelFactory? = null
+        @Volatile
+        private var INSTANCE: ViewModelFactory? = null
 
         fun getInstance(context: Context, retrofitClient: RetrofitClient) =
                 INSTANCE ?: synchronized(ViewModelFactory::class.java) {

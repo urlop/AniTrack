@@ -6,7 +6,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.anitrack.ruby.anitrack.data.source.GenreRepository
 import com.anitrack.ruby.anitrack.data.source.remote.GenresResult
-import com.anitrack.ruby.anitrack.data.source.remote.models.genre.Genre
+import com.anitrack.ruby.anitrack.data.source.remote.models.genre.GenreWS
 
 
 class GenreViewModel(repository: GenreRepository) : ViewModel() {
@@ -16,7 +16,7 @@ class GenreViewModel(repository: GenreRepository) : ViewModel() {
         repository.search(it)
     })
 
-    val result: LiveData<List<Genre>> = Transformations.switchMap(genreResult,
+    val result: LiveData<List<GenreWS>> = Transformations.switchMap(genreResult,
             { it -> it.data })
     val networkErrors: LiveData<String> = Transformations.switchMap(genreResult,
             { it -> it.networkErrors })

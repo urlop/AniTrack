@@ -6,7 +6,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.anitrack.ruby.anitrack.data.source.AnimeRepository
 import com.anitrack.ruby.anitrack.data.source.remote.AnimeSearchResult
-import com.anitrack.ruby.anitrack.data.source.remote.models.DataAnime
+import com.anitrack.ruby.anitrack.data.source.remote.models.AnimeWS
 
 
 class MainViewModel(val repository: AnimeRepository) : ViewModel() {
@@ -16,7 +16,7 @@ class MainViewModel(val repository: AnimeRepository) : ViewModel() {
     }
 
     //this is the data that we will fetch asynchronously
-    //private val animeList: MutableLiveData<List<DataAnime>>? = null
+    //private val animeList: MutableLiveData<List<AnimeWS>>? = null
     // var error: MutableLiveData<Boolean>? = null;
     //lateinit var repository: AnimeRepository
 
@@ -25,7 +25,7 @@ class MainViewModel(val repository: AnimeRepository) : ViewModel() {
         repository.search(it)
     })
 
-    val result: LiveData<List<DataAnime>> = Transformations.switchMap(animeResult,
+    val result: LiveData<List<AnimeWS>> = Transformations.switchMap(animeResult,
             { it -> it.data })
     val networkErrors: LiveData<String> = Transformations.switchMap(animeResult,
             { it -> it.networkErrors })
@@ -57,7 +57,7 @@ class MainViewModel(val repository: AnimeRepository) : ViewModel() {
     fun reverseSortString(sort: String): String = if (sort[0] == '-') sort.drop(1) else "-$sort"
 
 
-    /*fun getAnimesTrending(): LiveData<List<DataAnime>> {
+    /*fun getAnimesTrending(): LiveData<List<AnimeWS>> {
         //if the list is null
         if (animeList == null) {
             animeList = MutableLiveData()
@@ -66,7 +66,7 @@ class MainViewModel(val repository: AnimeRepository) : ViewModel() {
         }
 
         //finally we will return the list
-        return animeList as MutableLiveData<List<DataAnime>>
+        return animeList as MutableLiveData<List<AnimeWS>>
     }
 
     private fun loadAnimesTrending() {

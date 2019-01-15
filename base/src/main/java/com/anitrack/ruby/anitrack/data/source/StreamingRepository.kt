@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.anitrack.ruby.anitrack.data.source.remote.StreamingResult
 import com.anitrack.ruby.anitrack.data.source.remote.RetrofitClient
 import com.anitrack.ruby.anitrack.data.source.remote.models.streaming.BaseStreaming
-import com.anitrack.ruby.anitrack.data.source.remote.models.streaming.Streaming
+import com.anitrack.ruby.anitrack.data.source.remote.models.streaming.StreamingWS
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -14,7 +14,7 @@ import retrofit2.Response
  */
 class StreamingRepository(private val service: RetrofitClient) : GeneralRepository(service) {
 
-    var streamingList: MutableLiveData<List<Streaming>> = MutableLiveData()
+    var streamingList: MutableLiveData<List<StreamingWS>> = MutableLiveData()
 
     fun search(id: String): StreamingResult {
         requeststreamingList(id)

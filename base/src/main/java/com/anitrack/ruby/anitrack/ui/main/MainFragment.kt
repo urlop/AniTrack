@@ -15,7 +15,7 @@ import com.anitrack.ruby.anitrack.ViewModelFactory
 import com.anitrack.ruby.anitrack.data.source.AnimeRepository
 import com.anitrack.ruby.anitrack.data.source.remote.RetrofitClient
 import kotlinx.android.synthetic.main.main_fragment.*
-import com.anitrack.ruby.anitrack.data.source.remote.models.DataAnime
+import com.anitrack.ruby.anitrack.data.source.remote.models.AnimeWS
 import com.anitrack.ruby.anitrack.ui.BaseFragment
 
 
@@ -27,7 +27,7 @@ class MainFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     lateinit var adapter: AnimeAdapter
     private lateinit var viewModel: MainViewModel
-    private lateinit var observerResult: Observer<List<DataAnime>>
+    private lateinit var observerResult: Observer<List<AnimeWS>>
     private lateinit var observerNetworkErrors: Observer<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +47,7 @@ class MainFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         viewModel.searchAnime(AnimeRepository.SORT_POPULARITY, false, true);
 
         observerResult = Observer { list ->
-            adapter.addList(list as ArrayList<DataAnime>, true)
+            adapter.addList(list as ArrayList<AnimeWS>, true)
             srl_refresh.isRefreshing = false
         }
         observerNetworkErrors = Observer<String> {

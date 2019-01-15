@@ -4,10 +4,10 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class BaseGenre(val data: List<Genre>?) : Parcelable
+data class BaseGenre(val data: List<GenreWS>?) : Parcelable
 
 @Parcelize
-data class Genre(
+data class GenreWS(
         val id: String?,
         val type: String?,
         val links: Links?,

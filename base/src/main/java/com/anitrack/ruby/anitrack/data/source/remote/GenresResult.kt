@@ -18,14 +18,14 @@ package com.anitrack.ruby.anitrack.data.source.remote
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.anitrack.ruby.anitrack.data.source.remote.models.genre.Genre
+import com.anitrack.ruby.anitrack.data.source.remote.models.genre.GenreWS
 
 
 /**
- * GenresResult from a search, which contains MutableLiveData<List<Genres>> holding query data,
+ * GenresResult from a search, which contains MutableLiveData<List<GenresWS>> holding query data,
  * and a LiveData<String> of network error state.
  */
 data class GenresResult(
-        val data: MutableLiveData<List<Genre>>?,
+        val data: MutableLiveData<List<GenreWS>>?,
         val networkErrors: LiveData<String>
 )

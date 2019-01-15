@@ -5,31 +5,28 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.anitrack.ruby.anitrack.R
 import com.anitrack.ruby.anitrack.TempToolbarTitleListener
 import com.anitrack.ruby.anitrack.data.source.remote.RetrofitClient
-import com.anitrack.ruby.anitrack.data.source.remote.models.DataAnime
-import com.anitrack.ruby.anitrack.data.source.remote.models.genre.Genre
-import com.anitrack.ruby.anitrack.data.source.remote.models.streaming.Streaming
+import com.anitrack.ruby.anitrack.data.source.remote.models.AnimeWS
+import com.anitrack.ruby.anitrack.data.source.remote.models.genre.GenreWS
+import com.anitrack.ruby.anitrack.data.source.remote.models.streaming.StreamingWS
 import com.anitrack.ruby.anitrack.utils.ViewUtils
-import com.google.android.material.chip.Chip
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_anime_detail.*
-import android.widget.ImageView
-import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import com.anitrack.ruby.anitrack.ViewModelFactory
 import com.anitrack.ruby.anitrack.data.source.local.models.Anime
-import com.anitrack.ruby.anitrack.utils.EnumStreaming
-import java.net.URL
 import com.anitrack.ruby.anitrack.ui.OnBackPressedListener
+import com.google.android.material.chip.Chip
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener
 
 
@@ -62,8 +59,8 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
 
     private lateinit var genreViewModel: GenreViewModel
     private lateinit var streamingViewModel: StreamingViewModel
-    private lateinit var observerGenreResult: Observer<List<Genre>>
-    private lateinit var observerStreamingResult: Observer<List<Streaming>>
+    private lateinit var observerGenreResult: Observer<List<GenreWS>>
+    private lateinit var observerStreamingResult: Observer<List<StreamingWS>>
     private lateinit var observerNetworkErrors: Observer<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -83,11 +80,11 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val anime: DataAnime = arguments!!.getParcelable<DataAnime>(ARG_ANIME)
+        val anime: AnimeWS = arguments!!.getParcelable<AnimeWS>(ARG_ANIME)
         viewModel.initialize(anime)
 
 
-        (activity as TempToolbarTitleListener).updateTitle(anime.attributes.canonicalTitle
+        /*(activity as TempToolbarTitleListener).updateTitle(anime.attributes.canonicalTitle
                 ?: "Anime Detail")
         tv_name.text = if (anime.attributes.titles?.englishJapan != anime.attributes.canonicalTitle) anime.attributes.titles?.englishJapan else ""
         tv_summary.text = anime.attributes.synopsis
@@ -100,18 +97,50 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
 
         iv_background.setOnClickListener {
             watchYoutubeVideo(context!!, anime.attributes.youtubeVideoId!!)
-        }
+        }*/
 
         //attach menu to fab
         fab_save_menu.bindAnchorView(fab_save);
         //set menu selection listener
         fab_save_menu.setOnFABMenuSelectedListener(this);
 
-        viewModel.search(anime.id ?: "0")
+        viewModel.search()
         //genreViewModel.search(anime.id ?: "0");
         //streamingViewModel.search(anime.id ?: "0");
 
-        observerExtraDetailResult = Observer {  }
+        observerExtraDetailResult = Observer {
+            val anime = it
+            (activity as TempToolbarTitleListener).updateTitle(anime.canonicalTitle
+                    ?: "Anime Detail")
+            tv_name.text = if (anime.titles?.englishJapan != anime.canonicalTitle) anime.titles?.englishJapan else ""
+            tv_summary.text = anime.synopsis
+            tv_rating.text = ViewUtils.asRoundedDecimal(anime.averageStar ?: 0f, 1)
+            Picasso.get().load(anime.posterImage?.medium).into(iv_background)
+
+            if (tv_name.text.isEmpty()) {
+                tv_name.visibility = View.GONE
+            }
+
+            iv_background.setOnClickListener {
+                watchYoutubeVideo(context!!, anime.youtubeVideoId!!)
+            }
+
+            //Genres
+            if (anime.genres != null) {
+                //TODO reinitialize chips. view starts with previous anime
+                for (item in anime.genres!!) {
+                    val chip = Chip(cg_genres.context)
+                    chip.text = item.name
+                    chip.setTextColor(ContextCompat.getColor(context!!, R.color.white))
+                    chip.setChipBackgroundColorResource(R.color.colorAccent)
+
+                    // necessary to get single selection working
+                    chip.isClickable = true
+                    chip.isCheckable = false
+                    cg_genres.addView(chip)
+                }
+            }
+        }
         /*observerGenreResult = Observer { list ->
             //TODO Filter by genre
             for (item in list) {
@@ -148,7 +177,7 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
             Toast.makeText(context, "\uD83D\uDE28 Wooops ${it}", Toast.LENGTH_LONG).show()
         }
 
-        viewModel.animeDataResult.observe(this, observerExtraDetailResult)
+        viewModel.animeMediatorLiveData.observe(this, observerExtraDetailResult)
         //genreViewModel.result.observe(this, observerGenreResult)
         //genreViewModel.networkErrors.observe(this, observerNetworkErrors)
         //streamingViewModel.streamingDataResult.observe(this, observerStreamingResult)
@@ -157,6 +186,7 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
 
     override fun onDestroyView() {
         super.onDestroyView()
+        viewModel.animeMediatorLiveData.removeObserver(observerExtraDetailResult)
         /*genreViewModel.result.removeObserver(observerGenreResult)
         genreViewModel.networkErrors.removeObserver(observerNetworkErrors)
         streamingViewModel.streamingDataResult.removeObserver(observerStreamingResult)

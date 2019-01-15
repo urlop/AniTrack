@@ -18,14 +18,14 @@ package com.anitrack.ruby.anitrack.data.source.remote
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.anitrack.ruby.anitrack.data.source.remote.models.streaming.Streaming
+import com.anitrack.ruby.anitrack.data.source.remote.models.streaming.StreamingWS
 
 
 /**
- * StreamingResult from a search, which contains MutableLiveData<List<Streaming>> holding query data,
+ * StreamingResult from a search, which contains MutableLiveData<List<StreamingWS>> holding query data,
  * and a LiveData<String> of network error state.
  */
 data class StreamingResult(
-        val data: MutableLiveData<List<Streaming>>?,
+        val data: MutableLiveData<List<StreamingWS>>?,
         val networkErrors: LiveData<String>
 )

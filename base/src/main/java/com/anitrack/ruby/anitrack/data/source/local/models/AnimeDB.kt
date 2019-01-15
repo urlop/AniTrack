@@ -2,7 +2,6 @@ package com.anitrack.ruby.anitrack.data.source.local.models
 
 import android.os.Parcelable
 import androidx.room.Entity
-//import com.anitrack.ruby.anitrack.data.source.remote.models.*
 import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.IgnoredOnParcel
 import kotlinx.android.parcel.Parcelize
@@ -10,25 +9,25 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "animes")
 @Parcelize
 data class Anime(val id: String?, val type: String?,
-                 val genres: Genres?,
-                 val categories: Categories?,
-                 val castings: Castings?,
-                 val installments: Installments?,
-                 val mappings: Mappings?,
-                 val reviews: Reviews?,
-                 val mediaRelationships: MediaRelationships?,
-                 val episodes: Episodes?,
-                 val streamingLinks: StreamingLinks?,
-                 val animeProductions: AnimeProductions?,
-                 val animeCharacters: AnimeCharacters?,
-                 val animeStaff: AnimeStaff?,
+                 var genres: List<Genres>?,
+                 val categories: List<Categories>?,
+                 val castings: List<Castings>?,
+                 val installments: List<Installments>?,
+                 val mappings: List<Mappings>?,
+                 val reviews: List<Reviews>?,
+                 val mediaRelationships: List<MediaRelationships>?,
+                 val episodes: List<Episodes>?,
+                 var streamingLinks: List<StreamingLinks>?,
+                 val animeProductions: List<AnimeProductions>?,
+                 val animeCharacters: List<AnimeCharacters>?,
+                 val animeStaff: List<AnimeStaff>?,
 
                  val createdAt: String?, val updatedAt: String?, val slug: String?, val synopsis: String?, val coverImageTopOffset: Number?,
                  val titles: Titles?, val canonicalTitle: String?, val abbreviatedTitles: List<String>?, val averageRating: String?,
                  val ratingFrequencies: RatingFrequencies?, val userCount: Number?, val favoritesCount: Number?, val startDate: String?, val endDate: String?, val popularityRank: Number?, val ratingRank: Number?, val ageRating: String?, val ageRatingGuide: String?, val subtype: String?, val status: String?, val tba: String?,
                  val posterImage: PosterImage?,
                  val coverImage: CoverImage?, val episodeCount: Number?, val episodeLength: Number?, val youtubeVideoId: String?, val showType: String?, val nsfw: Boolean?
-                 ) : Parcelable { //IGNORABLE: Attributes (included inside), Links
+                 ) : Parcelable { //IGNORABLE: AttributesWS (included inside), LinksWS
     @IgnoredOnParcel
     val averageStar: Float?
         get() = (averageRating ?: "0").toFloat() * 5 / 100 //100 points to 5 stars
@@ -44,11 +43,11 @@ data class RatingFrequencies(@SerializedName("2") val two: String?, @SerializedN
 
 @Entity(tableName = "poster_image")
 @Parcelize
-data class PosterImage(val tiny: String?, val small: String?, val medium: String?, val large: String?, val original: String?) : Parcelable //IGNORABLE: Meta
+data class PosterImage(val tiny: String?, val small: String?, val medium: String?, val large: String?, val original: String?) : Parcelable //IGNORABLE: MetaWS
 
 @Entity(tableName = "cover_image")
 @Parcelize
-data class CoverImage(val tiny: String?, val small: String?, val large: String?, val original: String?) : Parcelable //IGNORABLE: Meta
+data class CoverImage(val tiny: String?, val small: String?, val large: String?, val original: String?) : Parcelable //IGNORABLE: MetaWS
 
 
 @Entity(tableName = "genres")

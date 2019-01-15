@@ -44,10 +44,10 @@ public class JavaFragment extends Fragment {
             }
         });*/
 
-        /*model.getResult().observe(this, new Observer<List<DataAnime>>() {
+        /*model.getResult().observe(this, new Observer<List<AnimeWS>>() {
             @Override
-            public void onChanged(@Nullable List<DataAnime> list) {
-                adapter = new AnimeAdapter((ArrayList<DataAnime>) list, getContext());
+            public void onChanged(@Nullable List<AnimeWS> list) {
+                adapter = new AnimeAdapter((ArrayList<AnimeWS>) list, getContext());
                 //recyclerView.setAdapter(adapter);
             }
         });*/

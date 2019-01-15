@@ -19,7 +19,6 @@ package com.anitrack.ruby.anitrack.data.source.remote
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.anitrack.ruby.anitrack.data.source.local.models.Anime
-import com.anitrack.ruby.anitrack.data.source.remote.models.genre.Genre
 
 
 /**

@@ -4,10 +4,10 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class BaseStreaming(val data: List<Streaming>?) : Parcelable
+data class BaseStreaming(val data: List<StreamingWS>?) : Parcelable
 
 @Parcelize
-data class Streaming(
+data class StreamingWS(
         val id: String?,
         val type: String?,
         val links: Links?,

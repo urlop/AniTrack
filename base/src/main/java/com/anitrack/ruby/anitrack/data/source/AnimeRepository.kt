@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.anitrack.ruby.anitrack.data.source.remote.AnimeSearchResult
 import com.anitrack.ruby.anitrack.data.source.remote.RetrofitClient
 import com.anitrack.ruby.anitrack.data.source.remote.models.BaseAnime
-import com.anitrack.ruby.anitrack.data.source.remote.models.DataAnime
+import com.anitrack.ruby.anitrack.data.source.remote.models.AnimeWS
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,7 +23,7 @@ class AnimeRepository(private val service: RetrofitClient) : GeneralRepository(s
     // keep the last requested page. When the request is successful, increment the page number.
     private var lastPageOffset = 0
 
-    var animeList: MutableLiveData<List<DataAnime>> = MutableLiveData()
+    var animeList: MutableLiveData<List<AnimeWS>> = MutableLiveData()
 
     fun search(sort: String): AnimeSearchResult {
         lastPageOffset = 0

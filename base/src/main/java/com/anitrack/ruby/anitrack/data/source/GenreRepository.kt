@@ -4,7 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import com.anitrack.ruby.anitrack.data.source.remote.GenresResult
 import com.anitrack.ruby.anitrack.data.source.remote.RetrofitClient
 import com.anitrack.ruby.anitrack.data.source.remote.models.genre.BaseGenre
-import com.anitrack.ruby.anitrack.data.source.remote.models.genre.Genre
+import com.anitrack.ruby.anitrack.data.source.remote.models.genre.GenreWS
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -14,7 +14,7 @@ import retrofit2.Response
  */
 class GenreRepository(private val service: RetrofitClient) : GeneralRepository(service) {
 
-    var genreList: MutableLiveData<List<Genre>> = MutableLiveData()
+    var genreList: MutableLiveData<List<GenreWS>> = MutableLiveData()
 
     fun search(id: String): GenresResult {
         requestgenreList(id)
@@ -30,14 +30,10 @@ class GenreRepository(private val service: RetrofitClient) : GeneralRepository(s
                 .enqueue(object : Callback<BaseGenre> {
                     override fun onResponse(call: Call<BaseGenre>, response: Response<BaseGenre>) {
                         try {
-                            if (genreList.value != null && genreList.value!!.isNotEmpty()) {
-                                genreList.postValue((genreList.value!!.toTypedArray() + response.body()!!.data!!.toTypedArray()).toList())
-                            } else {
-                                genreList.postValue(response.body()!!.data)
-                            }
+                            genreList.postValue(response.body()!!.data)
                             isRequestInProgress = false
                         } catch (e: Exception) {
-                            networkErrors.postValue("Genres not available") //404 {"error":"We couldn't find the record you were looking for."}
+                            networkErrors.postValue("GenresWS not available") //404 {"error":"We couldn't find the record you were looking for."}
                             isRequestInProgress = false
                         }
                     }

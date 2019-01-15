@@ -18,14 +18,14 @@ package com.anitrack.ruby.anitrack.data.source.remote
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.anitrack.ruby.anitrack.data.source.remote.models.DataAnime
+import com.anitrack.ruby.anitrack.data.source.remote.models.AnimeWS
 
 
 /**
- * AnimeSearchResult from a search, which contains MutableLiveData<List<DataAnime>> holding query data,
+ * AnimeSearchResult from a search, which contains MutableLiveData<List<AnimeWS>> holding query data,
  * and a LiveData<String> of network error state.
  */
 data class AnimeSearchResult(
-        val data: MutableLiveData<List<DataAnime>>?,
+        val data: MutableLiveData<List<AnimeWS>>?,
         val networkErrors: LiveData<String>
 )

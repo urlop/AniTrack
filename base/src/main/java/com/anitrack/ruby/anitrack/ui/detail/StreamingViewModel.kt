@@ -6,7 +6,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.anitrack.ruby.anitrack.data.source.StreamingRepository
 import com.anitrack.ruby.anitrack.data.source.remote.StreamingResult
-import com.anitrack.ruby.anitrack.data.source.remote.models.streaming.Streaming
+import com.anitrack.ruby.anitrack.data.source.remote.models.streaming.StreamingWS
 
 
 class StreamingViewModel(streamingRepository: StreamingRepository) : ViewModel() {
@@ -16,7 +16,7 @@ class StreamingViewModel(streamingRepository: StreamingRepository) : ViewModel()
         streamingRepository.search(it)
     })
 
-    val streamingDataResult: LiveData<List<Streaming>> = Transformations.switchMap(streamingResult,
+    val streamingDataResult: LiveData<List<StreamingWS>> = Transformations.switchMap(streamingResult,
             { it -> it.data })
     val streamingNetworkErrors: LiveData<String> = Transformations.switchMap(streamingResult,
             { it -> it.networkErrors })

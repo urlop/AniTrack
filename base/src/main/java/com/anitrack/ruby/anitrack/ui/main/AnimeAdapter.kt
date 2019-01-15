@@ -7,12 +7,12 @@ import androidx.core.os.bundleOf
 import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.anitrack.ruby.anitrack.R
-import com.anitrack.ruby.anitrack.data.source.remote.models.DataAnime
+import com.anitrack.ruby.anitrack.data.source.remote.models.AnimeWS
 import com.anitrack.ruby.anitrack.ui.detail.AnimeDetailFragment
 import com.anitrack.ruby.anitrack.utils.ViewUtils
 import com.squareup.picasso.Picasso
 
-class AnimeAdapter(val items: ArrayList<DataAnime>, val context: Context) : RecyclerView.Adapter<AnimeViewHolder>() {
+class AnimeAdapter(val items: ArrayList<AnimeWS>, val context: Context) : RecyclerView.Adapter<AnimeViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnimeViewHolder {
         return AnimeViewHolder(LayoutInflater.from(context).inflate(R.layout.item_anime, parent, false))
     }
@@ -20,7 +20,7 @@ class AnimeAdapter(val items: ArrayList<DataAnime>, val context: Context) : Recy
     override fun onBindViewHolder(holder: AnimeViewHolder, position: Int) {
         //TODO Animate correctly while appearing
 
-        val item: DataAnime = items.get(position)
+        val item: AnimeWS = items.get(position)
 
         val averageRating = item.attributes.averageRating ?: "0"
         val averageStar = averageRating.toFloat() * 5 / 100 //100 points to 5 stars
@@ -44,7 +44,7 @@ class AnimeAdapter(val items: ArrayList<DataAnime>, val context: Context) : Recy
         return items.size
     }
 
-    fun addList(data: ArrayList<DataAnime>, reset: Boolean) {
+    fun addList(data: ArrayList<AnimeWS>, reset: Boolean) {
         if (reset) clear()
         items.addAll(data)
         notifyDataSetChanged()

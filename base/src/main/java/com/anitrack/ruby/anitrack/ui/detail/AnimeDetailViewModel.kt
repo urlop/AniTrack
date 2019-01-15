@@ -59,11 +59,11 @@ class AnimeDetailViewModel(genreRepository: GenreRepository, streamingRepository
 
     //GenreWS
     //private val genreQueryLiveData = MutableLiveData<String>()
-    private val genreResult: LiveData<GenresResult> = Transformations.map(animeQueryData, {
+    private var genreResult: LiveData<GenresResult> = Transformations.map(animeQueryData, {
         genreRepository.search(it)
     })
 
-    val genreDataResult: LiveData<List<GenreWS>> = Transformations.switchMap(genreResult,
+    var genreDataResult: LiveData<List<GenreWS>> = Transformations.switchMap(genreResult,
             { it -> it.data })
     val genreNetworkErrors: LiveData<String> = Transformations.switchMap(genreResult,
             { it -> it.networkErrors })
@@ -95,9 +95,19 @@ class AnimeDetailViewModel(genreRepository: GenreRepository, streamingRepository
     }
 
     fun initialize(anime: AnimeWS) {
+        refresh()
         val result = animeToDb(anime)
-        result.genres = emptyList()
         animeMediatorLiveData.postValue(result)
+    }
+
+    fun refresh() {
+        animeMediatorLiveData.removeSource(genreDataResult)
+        genreDataResult = Transformations.switchMap(genreResult,
+                { it -> it.data })
+        animeMediatorLiveData.addSource(genreDataResult, {
+            animeMediatorLiveData.value?.genres = genresListToDb(it)
+            animeMediatorLiveData.postValue(animeMediatorLiveData.value)
+        })
     }
 
     fun search() {

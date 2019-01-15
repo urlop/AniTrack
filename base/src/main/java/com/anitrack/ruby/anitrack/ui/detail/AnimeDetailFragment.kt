@@ -73,6 +73,9 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
+        val anime: AnimeWS = arguments!!.getParcelable<AnimeWS>(ARG_ANIME)
+        viewModel.initialize(anime)
+
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_anime_detail, container, false)
     }
@@ -80,8 +83,7 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val anime: AnimeWS = arguments!!.getParcelable<AnimeWS>(ARG_ANIME)
-        viewModel.initialize(anime)
+
 
 
         /*(activity as TempToolbarTitleListener).updateTitle(anime.attributes.canonicalTitle
@@ -183,6 +185,8 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
         //streamingViewModel.streamingDataResult.observe(this, observerStreamingResult)
         //streamingViewModel.streamingNetworkErrors.observe(this, observerNetworkErrors)
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()

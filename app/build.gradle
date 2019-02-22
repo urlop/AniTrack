@@ -4,7 +4,6 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
-    buildToolsVersion '28.0.2'
 
 
     defaultConfig {
@@ -23,12 +22,6 @@ android {
            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
        }
     }
-
-    compileOptions {
-        sourceCompatibility 1.8
-        targetCompatibility 1.8
-    }
-
 }
 
 androidExtensions {

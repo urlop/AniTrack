@@ -14,7 +14,7 @@ import com.anitrack.ruby.anitrack.data.source.remote.models.streaming.Streaming
 class AnimeDetailViewModel(genreRepository: GenreRepository, streamingRepository: StreamingRepository) : ViewModel() {
 
     private val animeQueryData = MutableLiveData<String>()
-    private val animeResult: LiveData<AnimeResult> = Transformations.map(animeQueryData, {
+    private val animeResult: LiveData<AnimeResult> =  Transformations.map(animeQueryData, {
         animeMediatorLiveData
     })
     val animeDataResult: LiveData<Anime>? = Transformations.switchMap(animeResult,

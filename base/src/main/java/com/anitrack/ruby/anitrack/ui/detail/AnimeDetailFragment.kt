@@ -148,7 +148,7 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
             Toast.makeText(context, "\uD83D\uDE28 Wooops ${it}", Toast.LENGTH_LONG).show()
         }
 
-        viewModel.animeDataResult.observe(this, observerExtraDetailResult)
+        viewModel.animeDataResult!!.observe(this, observerExtraDetailResult)
         //genreViewModel.result.observe(this, observerGenreResult)
         //genreViewModel.networkErrors.observe(this, observerNetworkErrors)
         //streamingViewModel.streamingDataResult.observe(this, observerStreamingResult)

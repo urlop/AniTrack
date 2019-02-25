@@ -10,20 +10,22 @@ import com.anitrack.ruby.anitrack.data.source.remote.StreamingResult
 import com.anitrack.ruby.anitrack.data.source.remote.models.DataAnime
 import com.anitrack.ruby.anitrack.data.source.remote.models.genre.Genre
 import com.anitrack.ruby.anitrack.data.source.remote.models.streaming.Streaming
+import com.anitrack.ruby.anitrack.toAnime
 
 class AnimeDetailViewModel(genreRepository: GenreRepository, streamingRepository: StreamingRepository) : ViewModel() {
 
-    private val animeQueryData = MutableLiveData<String>()
-    private val animeResult: LiveData<AnimeResult> =  Transformations.map(animeQueryData, {
-        animeMediatorLiveData
-    })
-    val animeDataResult: LiveData<Anime>? = Transformations.switchMap(animeResult,
-            { it -> it.data })
-    val animeMediatorLiveData = MediatorLiveData<Anime>().apply {
+    /*private val animeQueryData = MutableLiveData<String>()*/
+    /*private val animeResult: LiveData<Anime> =  Transformations.map(animeQueryData, {
+        search(id)
+    })*/
+    /*val animeDataResult: LiveData<Anime>? = Transformations.switchMap(animeResult,
+            { it -> it })*/
+    /*val animeMediatorLiveData = MediatorLiveData<Anime>().apply {
         this.addSource(animeResult) {
-            this.value = it.data?.value
+            this.value = it
         }
-    }
+    }*/
+    val animeMediatorLiveData = MutableLiveData<Anime>()
 
     //Genre
     private val genreQueryLiveData = MutableLiveData<String>()
@@ -52,7 +54,7 @@ class AnimeDetailViewModel(genreRepository: GenreRepository, streamingRepository
     }
 
     fun initialize(anime: DataAnime){
-        animeMediatorLiveData.postValue(null) //anime)
+        animeMediatorLiveData.postValue(toAnime(anime, anime.attributes)) //anime)
     }
 
     fun search(id: String){

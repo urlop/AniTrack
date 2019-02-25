@@ -10,24 +10,24 @@ import kotlinx.android.parcel.Parcelize
 @Entity(tableName = "animes")
 @Parcelize
 data class Anime(val id: String?, val type: String?,
-                 val genres: Genres?,
-                 val categories: Categories?,
-                 val castings: Castings?,
-                 val installments: Installments?,
-                 val mappings: Mappings?,
-                 val reviews: Reviews?,
-                 val mediaRelationships: MediaRelationships?,
-                 val episodes: Episodes?,
-                 val streamingLinks: StreamingLinks?,
-                 val animeProductions: AnimeProductions?,
-                 val animeCharacters: AnimeCharacters?,
-                 val animeStaff: AnimeStaff?,
+                 val genres: Genres? = null,
+                 val categories: Categories? = null,
+                 val castings: Castings? = null,
+                 val installments: Installments? = null,
+                 val mappings: Mappings? = null,
+                 val reviews: Reviews? = null,
+                 val mediaRelationships: MediaRelationships? = null,
+                 val episodes: Episodes? = null,
+                 val streamingLinks: StreamingLinks? = null,
+                 val animeProductions: AnimeProductions? = null,
+                 val animeCharacters: AnimeCharacters? = null,
+                 val animeStaff: AnimeStaff? = null,
 
                  val createdAt: String?, val updatedAt: String?, val slug: String?, val synopsis: String?, val coverImageTopOffset: Number?,
-                 val titles: Titles?, val canonicalTitle: String?, val abbreviatedTitles: List<String>?, val averageRating: String?,
-                 val ratingFrequencies: RatingFrequencies?, val userCount: Number?, val favoritesCount: Number?, val startDate: String?, val endDate: String?, val popularityRank: Number?, val ratingRank: Number?, val ageRating: String?, val ageRatingGuide: String?, val subtype: String?, val status: String?, val tba: String?,
-                 val posterImage: PosterImage?,
-                 val coverImage: CoverImage?, val episodeCount: Number?, val episodeLength: Number?, val youtubeVideoId: String?, val showType: String?, val nsfw: Boolean?
+                 val titles: Titles? = null, val canonicalTitle: String?, val abbreviatedTitles: List<String>?, val averageRating: String?,
+                 val ratingFrequencies: RatingFrequencies? = null, val userCount: Number?, val favoritesCount: Number?, val startDate: String?, val endDate: String?, val popularityRank: Number?, val ratingRank: Number?, val ageRating: String?, val ageRatingGuide: String?, val subtype: String?, val status: String?, val tba: String?,
+                 val posterImage: PosterImage? = null,
+                 val coverImage: CoverImage? = null, val episodeCount: Number?, val episodeLength: Number?, val youtubeVideoId: String?, val showType: String?, val nsfw: Boolean?
                  ) : Parcelable { //IGNORABLE: Attributes (included inside), Links
     @IgnoredOnParcel
     val averageStar: Float?

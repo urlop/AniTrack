@@ -25,6 +25,6 @@
         tools:layout="@layout/fragment_anime_detail">
         <argument
             android:name="ARG_ANIME"
-            app:argType="com.anitrack.ruby.anitrack.network.models.DataAnime" />
+            app:argType="com.anitrack.ruby.anitrack.data.source.remote.models.DataAnime" />
     </fragment>
 </navigation>

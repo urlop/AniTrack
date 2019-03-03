@@ -1,1 +1,1 @@
-include ':allanime', ':app', ':base', ':instantapp'
+include ':allanime', ':app', ':instantapp' //, ':base'

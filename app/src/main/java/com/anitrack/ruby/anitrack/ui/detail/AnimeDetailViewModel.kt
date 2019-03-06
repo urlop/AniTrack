@@ -4,60 +4,62 @@ import androidx.lifecycle.*
 import com.anitrack.ruby.anitrack.data.source.GenreRepository
 import com.anitrack.ruby.anitrack.data.source.StreamingRepository
 import com.anitrack.ruby.anitrack.data.source.local.models.Anime
-import com.anitrack.ruby.anitrack.data.source.remote.AnimeResult
 import com.anitrack.ruby.anitrack.data.source.remote.GenresResult
 import com.anitrack.ruby.anitrack.data.source.remote.StreamingResult
 import com.anitrack.ruby.anitrack.data.source.remote.models.DataAnime
 import com.anitrack.ruby.anitrack.data.source.remote.models.genre.Genre
 import com.anitrack.ruby.anitrack.data.source.remote.models.streaming.Streaming
 import com.anitrack.ruby.anitrack.toAnime
+import com.anitrack.ruby.anitrack.toGenreList
+import com.anitrack.ruby.anitrack.toStreamingList
 
-class AnimeDetailViewModel(genreRepository: GenreRepository, streamingRepository: StreamingRepository) : ViewModel() {
+class AnimeDetailViewModel(val genreRepository: GenreRepository, val streamingRepository: StreamingRepository) : ViewModel() {
 
-    /*private val animeQueryData = MutableLiveData<String>()*/
-    /*private val animeResult: LiveData<Anime> =  Transformations.map(animeQueryData, {
-        search(id)
-    })*/
-    /*val animeDataResult: LiveData<Anime>? = Transformations.switchMap(animeResult,
-            { it -> it })*/
-    /*val animeMediatorLiveData = MediatorLiveData<Anime>().apply {
-        this.addSource(animeResult) {
-            this.value = it
-        }
-    }*/
     val animeMediatorLiveData = MutableLiveData<Anime>()
 
     //Genre
     private val genreQueryLiveData = MutableLiveData<String>()
-    private val genreResult: LiveData<GenresResult> = Transformations.map(genreQueryLiveData, {
-        genreRepository.search(it)
-    })
+    private var genreResult: LiveData<GenresResult>? = null
 
-    val genreDataResult: LiveData<List<Genre>> = Transformations.switchMap(genreResult,
-            { it -> it.data })
-    val genreNetworkErrors: LiveData<String> = Transformations.switchMap(genreResult,
-            { it -> it.networkErrors })
+    var genreFinalResult: LiveData<List<Genre>>? = null
+    var genreNetworkErrors: LiveData<String>? = null
 
     //Streaming
     private val streamingQueryLiveData = MutableLiveData<String>()
-    private val streamingResult: LiveData<StreamingResult> = Transformations.map(streamingQueryLiveData, {
-        streamingRepository.search(it)
-    })
+    private var streamingResult: LiveData<StreamingResult>? = null
 
-    val streamingDataResult: LiveData<List<Streaming>> = Transformations.switchMap(streamingResult,
-            { it -> it.data })
-    val streamingNetworkErrors: LiveData<String> = Transformations.switchMap(streamingResult,
-            { it -> it.networkErrors })
+    var streamingFinalResult: LiveData<List<Streaming>>? = null
+    var streamingNetworkErrors: LiveData<String>? = null
 
-    fun initialize(anime: Anime){
+    var liveDataMerger : LiveData<Anime>? = null
+
+    fun initialize(anime: Anime) {
+        genreResult = Transformations.map(genreQueryLiveData, {
+            genreRepository.search(it)
+        })
+        genreFinalResult = Transformations.switchMap(genreResult!!,
+        { it -> it.data })
+        genreNetworkErrors = Transformations.switchMap(genreResult!!,
+        { it -> it.networkErrors })
+
+        streamingResult = Transformations.map(streamingQueryLiveData, {
+            streamingRepository.search(it)
+        })
+        streamingFinalResult = Transformations.switchMap(streamingResult!!,
+        { it -> it.data })
+        streamingNetworkErrors = Transformations.switchMap(streamingResult!!,
+        { it -> it.networkErrors })
+
         animeMediatorLiveData.postValue(anime)
+
+        liveDataMerger = zipLiveData(genreFinalResult!!, streamingFinalResult!!)
     }
 
-    fun initialize(anime: DataAnime){
-        animeMediatorLiveData.postValue(toAnime(anime, anime.attributes)) //anime)
+    fun initialize(anime: DataAnime) {
+        initialize(toAnime(anime, anime.attributes))
     }
 
-    fun search(id: String){
+    fun search(id: String) {
         searchGenres(id)
         searchStreamings(id)
     }
@@ -72,4 +74,30 @@ class AnimeDetailViewModel(genreRepository: GenreRepository, streamingRepository
         streamingQueryLiveData.postValue(id)
     }
 
+    fun zipLiveData(a: LiveData<List<Genre>>, b: LiveData<List<Streaming>>): LiveData<Anime> {
+        return MediatorLiveData<Anime>().apply {
+            var lastA: List<Genre>? = null
+            var lastB: List<Streaming>? = null
+
+            fun update() {
+                val localLastA = lastA
+                val localLastB = lastB
+                if (localLastA != null && localLastB != null) {
+                    this.value = animeMediatorLiveData.value
+                    this.value!!.genres = toGenreList(localLastA) //TODO kotlin.KotlinNullPointerException. Not waiting for response
+                    this.value!!.streamingLinks = toStreamingList(localLastB)
+                    this.postValue(this.value)
+                }
+            }
+
+            addSource(a) {
+                lastA = it
+                update()
+            }
+            addSource(b) {
+                lastB = it
+                update()
+            }
+        }
+    }
 }

@@ -111,7 +111,34 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
         //genreViewModel.search(anime.id ?: "0");
         //streamingViewModel.search(anime.id ?: "0");
 
-        observerExtraDetailResult = Observer {  }
+        observerExtraDetailResult = Observer {
+            if (it.genres == null || it.streamingLinks == null) return@Observer
+            for (item in it.genres!!) {
+                val chip = Chip(cg_genres.context)
+                chip.text = item.name
+                chip.setTextColor(ContextCompat.getColor(context!!, R.color.white))
+                chip.setChipBackgroundColorResource(R.color.colorAccent)
+
+                // necessary to get single selection working
+                chip.isClickable = true
+                chip.isCheckable = false
+                cg_genres.addView(chip)
+            }
+
+            for (item in it.streamingLinks!!) {
+                val url = URL(item.url)
+                val host = url.getHost()
+
+                val imageView = ImageView(context)
+                val params = LinearLayout.LayoutParams(
+                        getResources().getDimension(R.dimen.streaming_button_size).toInt(),
+                        getResources().getDimension(R.dimen.streaming_button_size).toInt())
+                params.marginEnd = getResources().getDimension(R.dimen.space_10).toInt();
+                imageView.setImageResource(EnumStreaming.getByUrl(host).drawable)
+                imageView.layoutParams = params
+                (v_container_watch_on as ViewGroup).addView(imageView)
+            }
+        }
         /*observerGenreResult = Observer { list ->
             //TODO Filter by genre
             for (item in list) {
@@ -148,11 +175,12 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
             Toast.makeText(context, "\uD83D\uDE28 Wooops ${it}", Toast.LENGTH_LONG).show()
         }
 
-        viewModel.animeMediatorLiveData!!.observe(this, observerExtraDetailResult)
+        //viewModel.animeMediatorLiveData!!.observe(this, observerExtraDetailResult)
         //genreViewModel.result.observe(this, observerGenreResult)
         //genreViewModel.networkErrors.observe(this, observerNetworkErrors)
         //streamingViewModel.streamingDataResult.observe(this, observerStreamingResult)
         //streamingViewModel.streamingNetworkErrors.observe(this, observerNetworkErrors)
+        viewModel.liveDataMerger!!.observe(this, observerExtraDetailResult)
     }
 
     override fun onDestroyView() {
@@ -161,6 +189,7 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
         genreViewModel.networkErrors.removeObserver(observerNetworkErrors)
         streamingViewModel.streamingDataResult.removeObserver(observerStreamingResult)
         streamingViewModel.streamingNetworkErrors.removeObserver(observerNetworkErrors)*/
+        viewModel.liveDataMerger!!.removeObserver(observerExtraDetailResult)
     }
 
     fun watchYoutubeVideo(context: Context, id: String) {

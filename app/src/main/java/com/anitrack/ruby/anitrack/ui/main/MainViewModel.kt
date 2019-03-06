@@ -12,7 +12,7 @@ import com.anitrack.ruby.anitrack.data.source.remote.models.DataAnime
 class MainViewModel(val repository: AnimeRepository) : ViewModel() {
 
     companion object {
-        private const val VISIBLE_THRESHOLD = 5 //5
+        private const val VISIBLE_THRESHOLD = 5
     }
 
     //this is the data that we will fetch asynchronously

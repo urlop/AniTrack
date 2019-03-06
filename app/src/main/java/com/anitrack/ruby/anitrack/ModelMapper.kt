@@ -1,8 +1,13 @@
 package com.anitrack.ruby.anitrack
 
 import com.anitrack.ruby.anitrack.data.source.local.models.Anime
+import com.anitrack.ruby.anitrack.data.source.local.models.Genres
+import com.anitrack.ruby.anitrack.data.source.local.models.StreamingLinks
 import com.anitrack.ruby.anitrack.data.source.remote.models.Attributes
 import com.anitrack.ruby.anitrack.data.source.remote.models.DataAnime
+import com.anitrack.ruby.anitrack.data.source.remote.models.genre.Genre
+import com.anitrack.ruby.anitrack.data.source.remote.models.streaming.Streaming
+import com.google.gson.annotations.SerializedName
 
 fun toAnime(dataAnime: DataAnime, attributes: Attributes) = Anime(
         id = dataAnime.id,
@@ -34,6 +39,27 @@ fun toAnime(dataAnime: DataAnime, attributes: Attributes) = Anime(
         youtubeVideoId = attributes.youtubeVideoId,
         showType = attributes.showType,
         nsfw = attributes.nsfw
+)
+
+fun toGenreList(genres: List<Genre>) = genres.map {
+    toGenre(it)
+}
+
+fun toGenre(genre: Genre) = Genres(
+        id = genre.id,
+        name = genre.attributes!!.name,
+        slug = genre.attributes!!.slug
+)
+
+fun toStreamingList(genres: List<Streaming>) = genres.map {
+    toStreaming(it)
+}
+
+fun toStreaming(streaming: Streaming) = StreamingLinks(
+        id = streaming.id,
+        url = streaming.attributes!!.url,
+        subs = streaming.attributes!!.subs,
+        dubs = streaming.attributes!!.dubs
 )
 
 fun Attributes.toUserViewReflection() = with(::Anime) {

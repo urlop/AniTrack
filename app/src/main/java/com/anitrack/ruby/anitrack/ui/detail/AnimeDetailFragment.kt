@@ -113,6 +113,7 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
 
         observerExtraDetailResult = Observer {
             if (it.genres == null || it.streamingLinks == null) return@Observer
+            cg_genres.removeAllViews()
             for (item in it.genres!!) {
                 val chip = Chip(cg_genres.context)
                 chip.text = item.name
@@ -125,6 +126,7 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
                 cg_genres.addView(chip)
             }
 
+            (v_container_watch_on as ViewGroup).removeAllViews()
             for (item in it.streamingLinks!!) {
                 val url = URL(item.url)
                 val host = url.getHost()

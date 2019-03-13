@@ -84,7 +84,7 @@ class AnimeDetailViewModel(val genreRepository: GenreRepository, val streamingRe
                 val localLastB = lastB
                 if (localLastA != null && localLastB != null) {
                     this.value = animeMediatorLiveData.value
-                    this.value!!.genres = toGenreList(localLastA) //TODO kotlin.KotlinNullPointerException. Not waiting for response
+                    this.value!!.genres = toGenreList(localLastA) //TODO Create a singleton of the viewmodel per each anime
                     this.value!!.streamingLinks = toStreamingList(localLastB)
                     this.postValue(this.value)
                 }

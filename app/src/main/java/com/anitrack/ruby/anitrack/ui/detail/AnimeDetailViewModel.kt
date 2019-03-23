@@ -13,19 +13,19 @@ import com.anitrack.ruby.anitrack.toAnime
 import com.anitrack.ruby.anitrack.toGenreList
 import com.anitrack.ruby.anitrack.toStreamingList
 
-class AnimeDetailViewModel(val genreRepository: GenreRepository, val streamingRepository: StreamingRepository) : ViewModel() {
+class AnimeDetailViewModel(val genreRepository: GenreRepository, val streamingRepository: StreamingRepository, extras: List<Any>) : ViewModel() {
 
     val animeMediatorLiveData = MutableLiveData<Anime>()
 
     //Genre
-    private val genreQueryLiveData = MutableLiveData<String>()
+    private var genreQueryLiveData = MutableLiveData<String>()
     private var genreResult: LiveData<GenresResult>? = null
 
     var genreFinalResult: LiveData<List<Genre>>? = null
     var genreNetworkErrors: LiveData<String>? = null
 
     //Streaming
-    private val streamingQueryLiveData = MutableLiveData<String>()
+    private var streamingQueryLiveData = MutableLiveData<String>()
     private var streamingResult: LiveData<StreamingResult>? = null
 
     var streamingFinalResult: LiveData<List<Streaming>>? = null
@@ -33,7 +33,20 @@ class AnimeDetailViewModel(val genreRepository: GenreRepository, val streamingRe
 
     var liveDataMerger : LiveData<Anime>? = null
 
+    init {
+        if (extras.isNotEmpty()) {
+            if (extras[0] is DataAnime) {
+                initialize(extras[0] as DataAnime)
+            } else if (extras[0] is Anime) {
+                initialize(extras[0] as Anime)
+            }
+        }
+    }
+
     fun initialize(anime: Anime) {
+        genreQueryLiveData = MutableLiveData<String>()
+        streamingQueryLiveData = MutableLiveData<String>()
+
         genreResult = Transformations.map(genreQueryLiveData, {
             genreRepository.search(it)
         })
@@ -84,7 +97,7 @@ class AnimeDetailViewModel(val genreRepository: GenreRepository, val streamingRe
                 val localLastB = lastB
                 if (localLastA != null && localLastB != null) {
                     this.value = animeMediatorLiveData.value
-                    this.value!!.genres = toGenreList(localLastA) //TODO Create a singleton of the viewmodel per each anime
+                    this.value!!.genres = toGenreList(localLastA) //TODO Fix viewmodel duplicates data onrotate
                     this.value!!.streamingLinks = toStreamingList(localLastB)
                     this.postValue(this.value)
                 }

@@ -36,9 +36,9 @@ import com.anitrack.ruby.anitrack.ui.main.MainViewModel
  * This creator is to showcase how to inject dependencies into ViewModels. It's not
  * actually necessary in this case, as the product ID can be passed in a public method.
  *
- * Source: https://github.com/googlesamples/android-architecture/tree/todo-mvvm-live-kotlin
+ * Source: https://medium.com/@marco_cattaneo/android-viewmodel-and-factoryprovider-good-way-to-manage-it-with-dagger-2-d9e20a07084c
  */
-class ViewModelFactory(
+class ViewModelFactory2(
         private val context: Context,
         private val retrofitClient: RetrofitClient,
         private val extras: List<Any>
@@ -64,11 +64,11 @@ class ViewModelFactory(
 
         @SuppressLint("StaticFieldLeak")
         @Volatile
-        private var INSTANCE: ViewModelFactory? = null
+        private var INSTANCE: ViewModelFactory2? = null
 
         fun getInstance(context: Context, retrofitClient: RetrofitClient, extras: List<Any> = listOf()) =
-                INSTANCE ?: synchronized(ViewModelFactory::class.java) {
-                    INSTANCE ?: ViewModelFactory(context, retrofitClient, extras)
+                INSTANCE ?: synchronized(ViewModelFactory2::class.java) {
+                    INSTANCE ?: ViewModelFactory2(context, retrofitClient, extras)
                             .also { INSTANCE = it }
                 }
 

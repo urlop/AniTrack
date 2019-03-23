@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anitrack.ruby.anitrack.R
 import com.anitrack.ruby.anitrack.ViewModelFactory
+import com.anitrack.ruby.anitrack.ViewModelFactory2
 import com.anitrack.ruby.anitrack.data.source.AnimeRepository
 import com.anitrack.ruby.anitrack.data.source.remote.RetrofitClient
 import kotlinx.android.synthetic.main.main_fragment.*
@@ -32,7 +33,6 @@ class MainFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(activity!!, ViewModelFactory.getInstance(activity!!.applicationContext, RetrofitClient())).get(MainViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -42,9 +42,10 @@ class MainFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        viewModel = ViewModelProviders.of(this, ViewModelFactory.getInstance(context!!, RetrofitClient())).get(MainViewModel::class.java)
         setup()
 
-        viewModel.searchAnime(AnimeRepository.SORT_POPULARITY, false, true);
+        //viewModel.searchAnime(AnimeRepository.SORT_POPULARITY, false, true);
 
         observerResult = Observer { list ->
             adapter.addList(list as ArrayList<DataAnime>, true)
@@ -55,8 +56,8 @@ class MainFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
             srl_refresh.isRefreshing = false
         }
 
-        viewModel.result.reObserve(this, observerResult)
-        viewModel.networkErrors.reObserve(this, observerNetworkErrors)
+        viewModel.result.reObserve(viewLifecycleOwner, observerResult)
+        viewModel.networkErrors.reObserve(viewLifecycleOwner, observerNetworkErrors)
     }
 
     fun setup() {

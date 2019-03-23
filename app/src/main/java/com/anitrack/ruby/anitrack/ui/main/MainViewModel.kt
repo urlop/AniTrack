@@ -30,6 +30,10 @@ class MainViewModel(val repository: AnimeRepository) : ViewModel() {
     val networkErrors: LiveData<String> = Transformations.switchMap(animeResult,
             { it -> it.networkErrors })
 
+    init {
+        searchAnime(AnimeRepository.SORT_POPULARITY, false, true);
+    }
+
     /**
      * Search a repository based on a query string.
      */

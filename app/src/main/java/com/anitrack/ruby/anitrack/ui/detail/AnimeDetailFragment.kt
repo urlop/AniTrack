@@ -26,6 +26,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.anitrack.ruby.anitrack.ViewModelFactory
+import com.anitrack.ruby.anitrack.ViewModelFactory2
 import com.anitrack.ruby.anitrack.data.source.local.models.Anime
 import com.anitrack.ruby.anitrack.utils.EnumStreaming
 import java.net.URL
@@ -68,10 +69,7 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = ViewModelProviders.of(activity!!, ViewModelFactory.getInstance(activity!!.applicationContext, RetrofitClient())).get(AnimeDetailViewModel::class.java)
 
-        genreViewModel = ViewModelProviders.of(activity!!, ViewModelFactory.getInstance(activity!!.applicationContext, RetrofitClient())).get(GenreViewModel::class.java)
-        streamingViewModel = ViewModelProviders.of(activity!!, ViewModelFactory.getInstance(activity!!.applicationContext, RetrofitClient())).get(StreamingViewModel::class.java)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -84,7 +82,13 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
         super.onActivityCreated(savedInstanceState)
 
         val anime: DataAnime = arguments!!.getParcelable<DataAnime>(ARG_ANIME)
-        viewModel.initialize(anime)
+
+        //TODO change activity context to fragments?
+        viewModel = ViewModelProviders.of(this, ViewModelFactory2.getInstance(context!!, RetrofitClient(), listOf(anime))).get(AnimeDetailViewModel::class.java)
+        genreViewModel = ViewModelProviders.of(this, ViewModelFactory2.getInstance(context!!, RetrofitClient())).get(GenreViewModel::class.java)
+        streamingViewModel = ViewModelProviders.of(this, ViewModelFactory2.getInstance(context!!, RetrofitClient())).get(StreamingViewModel::class.java)
+
+        //viewModel.initialize(anime)
 
 
         (activity as TempToolbarTitleListener).updateTitle(anime.attributes.canonicalTitle
@@ -182,7 +186,8 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
         //genreViewModel.networkErrors.observe(this, observerNetworkErrors)
         //streamingViewModel.streamingDataResult.observe(this, observerStreamingResult)
         //streamingViewModel.streamingNetworkErrors.observe(this, observerNetworkErrors)
-        viewModel.liveDataMerger!!.observe(this, observerExtraDetailResult)
+
+        viewModel.liveDataMerger!!.observe(viewLifecycleOwner, observerExtraDetailResult) //TODO uncomment
     }
 
     override fun onDestroyView() {
@@ -191,7 +196,8 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
         genreViewModel.networkErrors.removeObserver(observerNetworkErrors)
         streamingViewModel.streamingDataResult.removeObserver(observerStreamingResult)
         streamingViewModel.streamingNetworkErrors.removeObserver(observerNetworkErrors)*/
-        viewModel.liveDataMerger!!.removeObserver(observerExtraDetailResult)
+
+        viewModel.liveDataMerger!!.removeObserver(observerExtraDetailResult) //TODO uncomment
     }
 
     fun watchYoutubeVideo(context: Context, id: String) {

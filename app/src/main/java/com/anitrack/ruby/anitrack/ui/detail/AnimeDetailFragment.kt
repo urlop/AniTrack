@@ -58,17 +58,7 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
 
     private lateinit var viewModel: AnimeDetailViewModel
     private lateinit var observerExtraDetailResult: Observer<Anime>
-
-    private lateinit var genreViewModel: GenreViewModel
-    private lateinit var streamingViewModel: StreamingViewModel
-    private lateinit var observerGenreResult: Observer<List<Genre>>
-    private lateinit var observerStreamingResult: Observer<List<Streaming>>
     private lateinit var observerNetworkErrors: Observer<String>
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
@@ -81,13 +71,7 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
 
         val anime: DataAnime = arguments!!.getParcelable<DataAnime>(ARG_ANIME)
 
-        //TODO change activity context to fragments?
         viewModel = ViewModelProviders.of(this, AnimeDetailViewModelFactory.getInstance(context!!, RetrofitClient(), listOf(anime))).get(AnimeDetailViewModel::class.java)
-        genreViewModel = ViewModelProviders.of(this, AnimeDetailViewModelFactory.getInstance(context!!, RetrofitClient())).get(GenreViewModel::class.java)
-        streamingViewModel = ViewModelProviders.of(this, AnimeDetailViewModelFactory.getInstance(context!!, RetrofitClient())).get(StreamingViewModel::class.java)
-
-        //viewModel.initialize(anime)
-
 
         (activity as TempToolbarTitleListener).updateTitle(anime.attributes.canonicalTitle
                 ?: "Anime Detail")
@@ -110,8 +94,6 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
         fab_save_menu.setOnFABMenuSelectedListener(this);
 
         viewModel.search(anime.id ?: "0")
-        //genreViewModel.search(anime.id ?: "0");
-        //streamingViewModel.search(anime.id ?: "0");
 
         observerExtraDetailResult = Observer {
             if (it.genres == null || it.streamingLinks == null) return@Observer
@@ -143,58 +125,16 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
                 (v_container_watch_on as ViewGroup).addView(imageView)
             }
         }
-        /*observerGenreResult = Observer { list ->
-            //TODO Filter by genre
-            for (item in list) {
-                val chip = Chip(cg_genres.context)
-                chip.text = item.attributes?.name
-                chip.setTextColor(ContextCompat.getColor(context!!, R.color.white))
-                chip.setChipBackgroundColorResource(R.color.colorAccent)
-
-                // necessary to get single selection working
-                chip.isClickable = true
-                chip.isCheckable = false
-                cg_genres.addView(chip)
-            }
-        }
-
-        observerStreamingResult = Observer { list ->
-            //TODO: Add click to link to webpage
-            for (item in list) {
-                val url = URL(item.attributes?.url)
-                val host = url.getHost()
-
-                val imageView = ImageView(context)
-                val params = LinearLayout.LayoutParams(
-                        getResources().getDimension(R.dimen.streaming_button_size).toInt(),
-                        getResources().getDimension(R.dimen.streaming_button_size).toInt())
-                params.marginEnd = getResources().getDimension(R.dimen.space_10).toInt();
-                imageView.setImageResource(EnumStreaming.getByUrl(host).drawable)
-                imageView.layoutParams = params
-                (v_container_watch_on as ViewGroup).addView(imageView)
-            }
-        }*/
 
         observerNetworkErrors = Observer<String> {
             Toast.makeText(context, "\uD83D\uDE28 Wooops ${it}", Toast.LENGTH_LONG).show()
         }
-
-        //viewModel.animeMediatorLiveData!!.observe(this, observerExtraDetailResult)
-        //genreViewModel.result.observe(this, observerGenreResult)
-        //genreViewModel.networkErrors.observe(this, observerNetworkErrors)
-        //streamingViewModel.streamingDataResult.observe(this, observerStreamingResult)
-        //streamingViewModel.streamingNetworkErrors.observe(this, observerNetworkErrors)
 
         viewModel.liveDataMerger!!.observe(viewLifecycleOwner, observerExtraDetailResult) //TODO uncomment
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        /*genreViewModel.result.removeObserver(observerGenreResult)
-        genreViewModel.networkErrors.removeObserver(observerNetworkErrors)
-        streamingViewModel.streamingDataResult.removeObserver(observerStreamingResult)
-        streamingViewModel.streamingNetworkErrors.removeObserver(observerNetworkErrors)*/
-
         viewModel.liveDataMerger!!.removeObserver(observerExtraDetailResult) //TODO uncomment
     }
 

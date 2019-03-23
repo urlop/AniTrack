@@ -15,11 +15,6 @@ class MainViewModel(val repository: AnimeRepository) : ViewModel() {
         private const val VISIBLE_THRESHOLD = 5
     }
 
-    //this is the data that we will fetch asynchronously
-    //private val animeList: MutableLiveData<List<DataAnime>>? = null
-    // var error: MutableLiveData<Boolean>? = null;
-    //lateinit var repository: AnimeRepository
-
     private val queryLiveData = MutableLiveData<String>()
     private val animeResult: LiveData<AnimeSearchResult> = Transformations.map(queryLiveData, {
         repository.search(it)
@@ -59,32 +54,5 @@ class MainViewModel(val repository: AnimeRepository) : ViewModel() {
     fun lastQueryValue(): String? = queryLiveData.value
 
     fun reverseSortString(sort: String): String = if (sort[0] == '-') sort.drop(1) else "-$sort"
-
-
-    /*fun getAnimesTrending(): LiveData<List<DataAnime>> {
-        //if the list is null
-        if (animeList == null) {
-            animeList = MutableLiveData()
-            //we will load it asynchronously from server in this method
-            loadAnimesTrending()
-        }
-
-        //finally we will return the list
-        return animeList as MutableLiveData<List<DataAnime>>
-    }
-
-    private fun loadAnimesTrending() {
-        RetrofitClient().getAnimesTrending()
-                .enqueue(object : Callback<BaseAnime> {
-                    override fun onResponse(call: Call<BaseAnime>, response: Response<BaseAnime>) {
-                        animeList?.value = response.body()!!.data;
-                    }
-
-                    override fun onFailure(call: Call<BaseAnime>, t: Throwable) {
-                        Log.d("MainViewModel", t.message);
-                        error?.value = true;
-                    }
-                })
-    }*/
 
 }

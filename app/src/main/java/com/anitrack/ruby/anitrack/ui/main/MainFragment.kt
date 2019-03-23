@@ -20,18 +20,10 @@ import com.anitrack.ruby.anitrack.ui.BaseFragment
 
 class MainFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
-    companion object {
-        fun newInstance() = MainFragment()
-    }
-
     lateinit var adapter: AnimeAdapter
     private lateinit var viewModel: MainViewModel
     private lateinit var observerResult: Observer<List<DataAnime>>
     private lateinit var observerNetworkErrors: Observer<String>
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View {
@@ -42,8 +34,6 @@ class MainFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProviders.of(this, MainViewModelFactory.getInstance(context!!, RetrofitClient())).get(MainViewModel::class.java)
         setup()
-
-        //viewModel.searchAnime(AnimeRepository.SORT_POPULARITY, false, true);
 
         observerResult = Observer { list ->
             adapter.addList(list as ArrayList<DataAnime>, true)

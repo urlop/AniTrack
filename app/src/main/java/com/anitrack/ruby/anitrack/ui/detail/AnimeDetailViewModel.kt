@@ -22,7 +22,7 @@ class AnimeDetailViewModel(val genreRepository: GenreRepository, val streamingRe
     private var genreResult: LiveData<GenresResult>? = null
 
     var genreFinalResult: LiveData<List<Genre>>? = null
-    var genreNetworkErrors: LiveData<String>? = null
+    var genreNetworkErrors: LiveData<String>? = null  //TODO use network errors
 
     //Streaming
     private var streamingQueryLiveData = MutableLiveData<String>()
@@ -97,7 +97,7 @@ class AnimeDetailViewModel(val genreRepository: GenreRepository, val streamingRe
                 val localLastB = lastB
                 if (localLastA != null && localLastB != null) {
                     this.value = animeMediatorLiveData.value
-                    this.value!!.genres = toGenreList(localLastA) //TODO Fix viewmodel duplicates data onrotate
+                    this.value!!.genres = toGenreList(localLastA)
                     this.value!!.streamingLinks = toStreamingList(localLastB)
                     this.postValue(this.value)
                 }

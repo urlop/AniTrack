@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.anitrack.ruby.anitrack.R
-import com.anitrack.ruby.anitrack.ViewModelFactory
-import com.anitrack.ruby.anitrack.ViewModelFactory2
 import com.anitrack.ruby.anitrack.data.source.AnimeRepository
 import com.anitrack.ruby.anitrack.data.source.remote.RetrofitClient
 import kotlinx.android.synthetic.main.main_fragment.*
@@ -42,7 +40,7 @@ class MainFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, ViewModelFactory.getInstance(context!!, RetrofitClient())).get(MainViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, MainViewModelFactory.getInstance(context!!, RetrofitClient())).get(MainViewModel::class.java)
         setup()
 
         //viewModel.searchAnime(AnimeRepository.SORT_POPULARITY, false, true);

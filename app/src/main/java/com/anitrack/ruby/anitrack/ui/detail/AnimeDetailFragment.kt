@@ -25,8 +25,6 @@ import kotlinx.android.synthetic.main.fragment_anime_detail.*
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import com.anitrack.ruby.anitrack.ViewModelFactory
-import com.anitrack.ruby.anitrack.ViewModelFactory2
 import com.anitrack.ruby.anitrack.data.source.local.models.Anime
 import com.anitrack.ruby.anitrack.utils.EnumStreaming
 import java.net.URL
@@ -84,9 +82,9 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
         val anime: DataAnime = arguments!!.getParcelable<DataAnime>(ARG_ANIME)
 
         //TODO change activity context to fragments?
-        viewModel = ViewModelProviders.of(this, ViewModelFactory2.getInstance(context!!, RetrofitClient(), listOf(anime))).get(AnimeDetailViewModel::class.java)
-        genreViewModel = ViewModelProviders.of(this, ViewModelFactory2.getInstance(context!!, RetrofitClient())).get(GenreViewModel::class.java)
-        streamingViewModel = ViewModelProviders.of(this, ViewModelFactory2.getInstance(context!!, RetrofitClient())).get(StreamingViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, AnimeDetailViewModelFactory.getInstance(context!!, RetrofitClient(), listOf(anime))).get(AnimeDetailViewModel::class.java)
+        genreViewModel = ViewModelProviders.of(this, AnimeDetailViewModelFactory.getInstance(context!!, RetrofitClient())).get(GenreViewModel::class.java)
+        streamingViewModel = ViewModelProviders.of(this, AnimeDetailViewModelFactory.getInstance(context!!, RetrofitClient())).get(StreamingViewModel::class.java)
 
         //viewModel.initialize(anime)
 

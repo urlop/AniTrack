@@ -22,7 +22,7 @@ class AnimeDetailViewModel(val genreRepository: GenreRepository, val streamingRe
     private var genreResult: LiveData<GenresResult>? = null
 
     var genreFinalResult: LiveData<List<Genre>>? = null
-    var genreNetworkErrors: LiveData<String>? = null  //TODO use network errors
+    var genreNetworkErrors: LiveData<String>? = null
 
     //Streaming
     private var streamingQueryLiveData = MutableLiveData<String>()

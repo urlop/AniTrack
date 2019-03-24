@@ -130,12 +130,14 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
             Toast.makeText(context, "\uD83D\uDE28 Wooops ${it}", Toast.LENGTH_LONG).show()
         }
 
-        viewModel.liveDataMerger!!.observe(viewLifecycleOwner, observerExtraDetailResult) //TODO uncomment
+        viewModel.liveDataMerger!!.observe(viewLifecycleOwner, observerExtraDetailResult)
+        viewModel.genreNetworkErrors!!.observe(viewLifecycleOwner, observerNetworkErrors)
+        viewModel.streamingNetworkErrors!!.observe(viewLifecycleOwner, observerNetworkErrors)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        viewModel.liveDataMerger!!.removeObserver(observerExtraDetailResult) //TODO uncomment
+        viewModel.liveDataMerger!!.removeObserver(observerExtraDetailResult)
     }
 
     fun watchYoutubeVideo(context: Context, id: String) {

@@ -16,8 +16,6 @@ import com.anitrack.ruby.anitrack.R
 import com.anitrack.ruby.anitrack.TempToolbarTitleListener
 import com.anitrack.ruby.anitrack.data.source.remote.RetrofitClient
 import com.anitrack.ruby.anitrack.data.source.remote.models.DataAnime
-import com.anitrack.ruby.anitrack.data.source.remote.models.genre.Genre
-import com.anitrack.ruby.anitrack.data.source.remote.models.streaming.Streaming
 import com.anitrack.ruby.anitrack.utils.ViewUtils
 import com.google.android.material.chip.Chip
 import com.squareup.picasso.Picasso
@@ -26,13 +24,15 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.anitrack.ruby.anitrack.data.source.local.models.Anime
+import com.anitrack.ruby.anitrack.ui.BaseFragment
+import com.anitrack.ruby.anitrack.ui.ViewModelFactory
 import com.anitrack.ruby.anitrack.utils.EnumStreaming
 import java.net.URL
 import com.anitrack.ruby.anitrack.ui.OnBackPressedListener
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener
 
 
-class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressedListener {
+class AnimeDetailFragment : BaseFragment(), OnFABMenuSelectedListener, OnBackPressedListener {
     override fun onBackPressed(): Boolean {
         if (fab_save_menu != null) {
             //action not popBackStack
@@ -71,7 +71,7 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
 
         val anime: DataAnime = arguments!!.getParcelable<DataAnime>(ARG_ANIME)
 
-        viewModel = ViewModelProviders.of(this, AnimeDetailViewModelFactory.getInstance(context!!, RetrofitClient(), listOf(anime))).get(AnimeDetailViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, ViewModelFactory.newInstance(context!!, RetrofitClient(), listOf(anime))).get(AnimeDetailViewModel::class.java)
 
         (activity as TempToolbarTitleListener).updateTitle(anime.attributes.canonicalTitle
                 ?: "Anime Detail")
@@ -130,9 +130,9 @@ class AnimeDetailFragment : Fragment(), OnFABMenuSelectedListener, OnBackPressed
             Toast.makeText(context, "\uD83D\uDE28 Wooops ${it}", Toast.LENGTH_LONG).show()
         }
 
-        viewModel.liveDataMerger!!.observe(viewLifecycleOwner, observerExtraDetailResult)
-        viewModel.genreNetworkErrors!!.observe(viewLifecycleOwner, observerNetworkErrors)
-        viewModel.streamingNetworkErrors!!.observe(viewLifecycleOwner, observerNetworkErrors)
+        viewModel.liveDataMerger!!.reObserve(viewLifecycleOwner, observerExtraDetailResult)
+        viewModel.genreNetworkErrors!!.reObserve(viewLifecycleOwner, observerNetworkErrors)
+        viewModel.streamingNetworkErrors!!.reObserve(viewLifecycleOwner, observerNetworkErrors)
     }
 
     override fun onDestroyView() {

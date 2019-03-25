@@ -16,6 +16,7 @@ import com.anitrack.ruby.anitrack.data.source.remote.RetrofitClient
 import kotlinx.android.synthetic.main.main_fragment.*
 import com.anitrack.ruby.anitrack.data.source.remote.models.DataAnime
 import com.anitrack.ruby.anitrack.ui.BaseFragment
+import com.anitrack.ruby.anitrack.ui.ViewModelFactory
 
 
 class MainFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
@@ -32,7 +33,7 @@ class MainFragment : BaseFragment(), SwipeRefreshLayout.OnRefreshListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this, MainViewModelFactory.getInstance(context!!, RetrofitClient())).get(MainViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, ViewModelFactory.getInstance(context!!, RetrofitClient())).get(MainViewModel::class.java)
         setup()
 
         observerResult = Observer { list ->

@@ -13,7 +13,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.anitrack.ruby.anitrack.ui.main
+package com.anitrack.ruby.anitrack.ui
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -21,7 +21,13 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.anitrack.ruby.anitrack.data.source.AnimeRepository
+import com.anitrack.ruby.anitrack.data.source.GenreRepository
+import com.anitrack.ruby.anitrack.data.source.StreamingRepository
 import com.anitrack.ruby.anitrack.data.source.remote.RetrofitClient
+import com.anitrack.ruby.anitrack.ui.detail.AnimeDetailViewModel
+import com.anitrack.ruby.anitrack.ui.detail.GenreViewModel
+import com.anitrack.ruby.anitrack.ui.detail.StreamingViewModel
+import com.anitrack.ruby.anitrack.ui.main.MainViewModel
 
 /**
  * A creator is used to inject the product ID into the ViewModel
@@ -30,9 +36,9 @@ import com.anitrack.ruby.anitrack.data.source.remote.RetrofitClient
  * This creator is to showcase how to inject dependencies into ViewModels. It's not
  * actually necessary in this case, as the product ID can be passed in a public method.
  *
- * Source: https://github.com/googlesamples/android-architecture/tree/todo-mvvm-live-kotlin
+ * Source: https://medium.com/@marco_cattaneo/android-viewmodel-and-factoryprovider-good-way-to-manage-it-with-dagger-2-d9e20a07084c
  */
-class MainViewModelFactory(
+class ViewModelFactory(
         private val context: Context,
         private val retrofitClient: RetrofitClient,
         private val extras: List<Any>
@@ -43,6 +49,12 @@ class MainViewModelFactory(
                 when {
                     isAssignableFrom(MainViewModel::class.java) ->
                         MainViewModel(AnimeRepository(retrofitClient))
+                    isAssignableFrom(AnimeDetailViewModel::class.java) ->
+                        AnimeDetailViewModel(GenreRepository(retrofitClient), StreamingRepository(retrofitClient), extras)
+                    isAssignableFrom(GenreViewModel::class.java) ->
+                        GenreViewModel(GenreRepository(retrofitClient))
+                    isAssignableFrom(StreamingViewModel::class.java) ->
+                        StreamingViewModel(StreamingRepository(retrofitClient))
                     else ->
                         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
                 }
@@ -52,15 +64,20 @@ class MainViewModelFactory(
 
         @SuppressLint("StaticFieldLeak")
         @Volatile
-        private var INSTANCE: MainViewModelFactory? = null
+        private var INSTANCE: ViewModelFactory? = null
 
         fun getInstance(context: Context, retrofitClient: RetrofitClient, extras: List<Any> = listOf()) =
                 INSTANCE
-                        ?: synchronized(MainViewModelFactory::class.java) {
-                    INSTANCE
-                            ?: MainViewModelFactory(context, retrofitClient, extras)
-                            .also { INSTANCE = it }
-                }
+                        ?: synchronized(ViewModelFactory::class.java) {
+                            INSTANCE
+                                    ?: ViewModelFactory(context, retrofitClient, extras)
+                                            .also { INSTANCE = it }
+                        }
+
+        fun newInstance(context: Context, retrofitClient: RetrofitClient, extras: List<Any> = listOf()): ViewModelFactory? {
+            INSTANCE = ViewModelFactory(context, retrofitClient, extras)
+            return INSTANCE
+        }
 
 
         @VisibleForTesting

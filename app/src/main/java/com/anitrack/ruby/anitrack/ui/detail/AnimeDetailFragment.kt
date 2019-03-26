@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.anitrack.ruby.anitrack.R
@@ -22,18 +21,18 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_anime_detail.*
 import android.widget.ImageView
 import android.widget.LinearLayout
+import androidx.activity.OnBackPressedCallback
 import androidx.core.content.ContextCompat
 import com.anitrack.ruby.anitrack.data.source.local.models.Anime
 import com.anitrack.ruby.anitrack.ui.BaseFragment
 import com.anitrack.ruby.anitrack.ui.ViewModelFactory
 import com.anitrack.ruby.anitrack.utils.EnumStreaming
 import java.net.URL
-import com.anitrack.ruby.anitrack.ui.OnBackPressedListener
 import com.hlab.fabrevealmenu.listeners.OnFABMenuSelectedListener
 
 
-class AnimeDetailFragment : BaseFragment(), OnFABMenuSelectedListener, OnBackPressedListener {
-    override fun onBackPressed(): Boolean {
+class AnimeDetailFragment : BaseFragment(), OnFABMenuSelectedListener, OnBackPressedCallback {
+    override fun handleOnBackPressed(): Boolean {
         if (fab_save_menu != null) {
             //action not popBackStack
             if (fab_save_menu.isShowing()) {
@@ -60,6 +59,12 @@ class AnimeDetailFragment : BaseFragment(), OnFABMenuSelectedListener, OnBackPre
     private lateinit var observerExtraDetailResult: Observer<Anime>
     private lateinit var observerNetworkErrors: Observer<String>
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
@@ -72,6 +77,9 @@ class AnimeDetailFragment : BaseFragment(), OnFABMenuSelectedListener, OnBackPre
         val anime: DataAnime = arguments!!.getParcelable<DataAnime>(ARG_ANIME)
 
         viewModel = ViewModelProviders.of(this, ViewModelFactory.newInstance(context!!, RetrofitClient(), listOf(anime))).get(AnimeDetailViewModel::class.java)
+
+        //Handle Back Button
+        requireActivity().addOnBackPressedCallback(viewLifecycleOwner, this)
 
         (activity as TempToolbarTitleListener).updateTitle(anime.attributes.canonicalTitle
                 ?: "Anime Detail")

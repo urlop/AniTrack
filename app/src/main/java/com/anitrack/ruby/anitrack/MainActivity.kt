@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.Navigation.findNavController
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
-import com.anitrack.ruby.anitrack.ui.OnBackPressedListener
-import androidx.navigation.fragment.NavHostFragment
 
 
 /**
@@ -48,12 +46,4 @@ class MainActivity : AppCompatActivity(), TempToolbarTitleListener {
     override fun onSupportNavigateUp() =
             findNavController(this, R.id.my_nav_host_fragment).navigateUp()
 
-    override fun onBackPressed() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.my_nav_host_fragment)
-        val fragment = navHostFragment!!.getChildFragmentManager().fragments[0]
-
-        if ((fragment as? OnBackPressedListener)?.onBackPressed() != true) {
-            super.onBackPressed()
-        }
-    }
 }
